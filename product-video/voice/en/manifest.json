@@ -1,0 +1,393 @@
+{
+  "provider": "elevenlabs",
+  "hash": "b758189c30e9",
+  "lines": {
+    "hook": {
+      "file": "hook.wav",
+      "text": "Most habit apps have never seen your calendar.",
+      "duration": 2.68,
+      "words": [
+        {
+          "word": "Most",
+          "start": 0.03,
+          "end": 0.35
+        },
+        {
+          "word": "habit",
+          "start": 0.43,
+          "end": 0.67
+        },
+        {
+          "word": "apps",
+          "start": 0.75,
+          "end": 0.99
+        },
+        {
+          "word": "have",
+          "start": 1.07,
+          "end": 1.15
+        },
+        {
+          "word": "never",
+          "start": 1.31,
+          "end": 1.55
+        },
+        {
+          "word": "seen",
+          "start": 1.71,
+          "end": 1.79
+        },
+        {
+          "word": "your",
+          "start": 1.87,
+          "end": 1.95
+        },
+        {
+          "word": "calendar.",
+          "start": 2.03,
+          "end": 2.59
+        }
+      ]
+    },
+    "has": {
+      "file": "has.wav",
+      "text": "Habitnex has.",
+      "duration": 1.3,
+      "words": [
+        {
+          "word": "Habitnex",
+          "start": 0.03,
+          "end": 0.59
+        },
+        {
+          "word": "has.",
+          "start": 0.67,
+          "end": 1.31
+        }
+      ]
+    },
+    "gap": {
+      "file": "gap.wav",
+      "text": "And it finds the gap.",
+      "duration": 1.58,
+      "words": [
+        {
+          "word": "And",
+          "start": 0.03,
+          "end": 0.11
+        },
+        {
+          "word": "it",
+          "start": 0.27,
+          "end": 0.43
+        },
+        {
+          "word": "finds",
+          "start": 0.59,
+          "end": 0.937
+        },
+        {
+          "word": "the",
+          "start": 0.963,
+          "end": 0.99
+        },
+        {
+          "word": "gap.",
+          "start": 1.07,
+          "end": 1.67
+        }
+      ]
+    },
+    "voice": {
+      "file": "voice.wav",
+      "text": "Your coach talks your way.",
+      "duration": 1.61,
+      "words": [
+        {
+          "word": "Your",
+          "start": 0.03,
+          "end": 0.19
+        },
+        {
+          "word": "coach",
+          "start": 0.39,
+          "end": 0.59
+        },
+        {
+          "word": "talks",
+          "start": 0.67,
+          "end": 0.99
+        },
+        {
+          "word": "your",
+          "start": 1.07,
+          "end": 1.15
+        },
+        {
+          "word": "way.",
+          "start": 1.31,
+          "end": 1.67
+        }
+      ]
+    },
+    "strict": {
+      "file": "strict.wav",
+      "text": "Strict.",
+      "duration": 0.72,
+      "words": [
+        {
+          "word": "Strict.",
+          "start": 0.03,
+          "end": 0.67
+        }
+      ]
+    },
+    "sarcastic": {
+      "file": "sarcastic.wav",
+      "text": "Sarcastic.",
+      "duration": 0.93,
+      "words": [
+        {
+          "word": "Sarcastic.",
+          "start": 0.03,
+          "end": 0.91
+        }
+      ]
+    },
+    "calm": {
+      "file": "calm.wav",
+      "text": "Calm.",
+      "duration": 0.635,
+      "words": [
+        {
+          "word": "Calm.",
+          "start": 0.03,
+          "end": 0.63
+        }
+      ]
+    },
+    "friendly": {
+      "file": "friendly.wav",
+      "text": "Or friendly.",
+      "duration": 0.93,
+      "words": [
+        {
+          "word": "Or",
+          "start": 0.03,
+          "end": 0.19
+        },
+        {
+          "word": "friendly.",
+          "start": 0.27,
+          "end": 0.95
+        }
+      ]
+    },
+    "reminder": {
+      "file": "reminder.wav",
+      "text": "Answer right from the reminder.",
+      "duration": 1.82,
+      "words": [
+        {
+          "word": "Answer",
+          "start": 0.03,
+          "end": 0.35
+        },
+        {
+          "word": "right",
+          "start": 0.51,
+          "end": 0.75
+        },
+        {
+          "word": "from",
+          "start": 0.83,
+          "end": 0.91
+        },
+        {
+          "word": "the",
+          "start": 0.95,
+          "end": 0.99
+        },
+        {
+          "word": "reminder.",
+          "start": 1.07,
+          "end": 1.83
+        }
+      ]
+    },
+    "adaptA": {
+      "file": "adaptA.wav",
+      "text": "Busy week?",
+      "duration": 0.8,
+      "words": [
+        {
+          "word": "Busy",
+          "start": 0.03,
+          "end": 0.27
+        },
+        {
+          "word": "week?",
+          "start": 0.35,
+          "end": 0.79
+        }
+      ]
+    },
+    "adaptB": {
+      "file": "adaptB.wav",
+      "text": "It adjusts the plan.",
+      "duration": 1.185,
+      "words": [
+        {
+          "word": "It",
+          "start": 0.03,
+          "end": 0.11
+        },
+        {
+          "word": "adjusts",
+          "start": 0.27,
+          "end": 0.47
+        },
+        {
+          "word": "the",
+          "start": 0.51,
+          "end": 0.55
+        },
+        {
+          "word": "plan.",
+          "start": 0.59,
+          "end": 1.19
+        }
+      ]
+    },
+    "chat": {
+      "file": "chat.wav",
+      "text": "Or just tell your coach.",
+      "duration": 1.455,
+      "words": [
+        {
+          "word": "Or",
+          "start": 0.03,
+          "end": 0.19
+        },
+        {
+          "word": "just",
+          "start": 0.35,
+          "end": 0.51
+        },
+        {
+          "word": "tell",
+          "start": 0.59,
+          "end": 0.67
+        },
+        {
+          "word": "your",
+          "start": 0.75,
+          "end": 0.83
+        },
+        {
+          "word": "coach.",
+          "start": 0.91,
+          "end": 1.43
+        }
+      ]
+    },
+    "progress": {
+      "file": "progress.wav",
+      "text": "And see what's actually sticking.",
+      "duration": 2.05,
+      "words": [
+        {
+          "word": "And",
+          "start": 0.03,
+          "end": 0.19
+        },
+        {
+          "word": "see",
+          "start": 0.27,
+          "end": 0.43
+        },
+        {
+          "word": "what's",
+          "start": 0.51,
+          "end": 0.83
+        },
+        {
+          "word": "actually",
+          "start": 1.11,
+          "end": 1.39
+        },
+        {
+          "word": "sticking.",
+          "start": 1.47,
+          "end": 2.15
+        }
+      ]
+    },
+    "year": {
+      "file": "year.wav",
+      "text": "Day by day, all year.",
+      "duration": 1.99,
+      "words": [
+        {
+          "word": "Day",
+          "start": 0.03,
+          "end": 0.19
+        },
+        {
+          "word": "by",
+          "start": 0.27,
+          "end": 0.43
+        },
+        {
+          "word": "day,",
+          "start": 0.51,
+          "end": 0.91
+        },
+        {
+          "word": "all",
+          "start": 1.07,
+          "end": 1.31
+        },
+        {
+          "word": "year.",
+          "start": 1.39,
+          "end": 1.91
+        }
+      ]
+    },
+    "end": {
+      "file": "end.wav",
+      "text": "Habitnex. Habits that actually stick.",
+      "duration": 2.97,
+      "words": [
+        {
+          "word": "Habitnex.",
+          "start": 0.03,
+          "end": 0.91
+        },
+        {
+          "word": "Habits",
+          "start": 1.07,
+          "end": 1.47
+        },
+        {
+          "word": "that",
+          "start": 1.55,
+          "end": 1.63
+        },
+        {
+          "word": "actually",
+          "start": 1.87,
+          "end": 2.35
+        },
+        {
+          "word": "stick.",
+          "start": 2.43,
+          "end": 3.07
+        }
+      ]
+    }
+  },
+  "voice": "Sarah - Mature, Reassuring, Confident",
+  "model": "eleven_v4"
+}

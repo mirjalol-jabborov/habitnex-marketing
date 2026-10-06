@@ -1,0 +1,9 @@
+{
+  "_note": "The music bed. The film runs at 120 BPM, so the track is slowed or sped to match, and placed so its first kick lands on `kickAt` (seconds into the film: the moment the opening line ends and the app appears). To use another track, replace the file and set its tempo and the time of its first kick; tools/beat.mjs measures both.",
+  "file": "deep-urban.mp3",
+  "title": "Deep Urban",
+  "source": "https://mixkit.co/free-stock-music/tag/technology/ (Mixkit Stock Music Free License: free for commercial use, no attribution required)",
+  "bpm": 124.002,
+  "firstKick": 15.5461,
+  "kickAt": 3.0
+}

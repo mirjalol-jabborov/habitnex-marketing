@@ -1,0 +1,336 @@
+{
+  "_note": "Every word shown in the video. To make another language, copy this file (ru.json, uz.json), translate the values and render with --lang. UI strings match the app's Localizable.xcstrings and the server's coach templates (backend/src/services/coach.service.js), so take the translations from there.",
+  "captions": {
+    "hook": "Most habit apps\nhave never seen\nyour calendar.",
+    "has": "Habitnex has.",
+    "gap": "And it finds\nthe gap.",
+    "voice": "A coach that talks your way.",
+    "reminder": "Answer right\nfrom the reminder.",
+    "done": "Done.",
+    "adaptA": "Busy week?",
+    "adaptB": "It adjusts\nthe plan.",
+    "chat": "Or just tell\nyour coach.",
+    "progress": "See what's\nactually sticking.",
+    "year": "Day by day. All year."
+  },
+  "end": {
+    "wordmark": "habitnex",
+    "tagline": "Habits that actually stick.",
+    "sub": "The coach that knows your calendar."
+  },
+  "tabs": [
+    "Today",
+    "Progress",
+    "Coach",
+    "Settings"
+  ],
+  "weekdayLetters": {
+    "sun": "S",
+    "mon": "M",
+    "tue": "T",
+    "wed": "W",
+    "thu": "T",
+    "fri": "F",
+    "sat": "S"
+  },
+  "weekdayShort": {
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat"
+  },
+  "hours": [
+    "6 AM",
+    "7 AM",
+    "8 AM",
+    "9 AM",
+    "10 AM",
+    "11 AM",
+    "Noon",
+    "1 PM",
+    "2 PM",
+    "3 PM",
+    "4 PM",
+    "5 PM",
+    "6 PM",
+    "7 PM",
+    "8 PM",
+    "9 PM",
+    "10 PM",
+    "11 PM"
+  ],
+  "clock": {
+    "start": 640,
+    "end": 750,
+    "format": "12h"
+  },
+  "today": {
+    "title": "Today",
+    "summary": "Thu, Oct 1 · 5 events · 6h free",
+    "month": "Sep – Oct 2026",
+    "yourDay": "Your day",
+    "work": "Work",
+    "personal": "Personal",
+    "coachLabel": "Coach · From your calendar",
+    "moveText": "You're busy until 12:30 PM. Want Gym at 12:30 PM instead?",
+    "moveButton": "Move to 12:30 PM",
+    "keepButton": "Keep 12:00 PM",
+    "nextUpText": "Next up: Gym at 12:30 PM. You're free until 2:30 PM.",
+    "free1": "Free · 7:00 AM – 9:30 AM",
+    "free3": "Free · 12:30 PM – 2:30 PM",
+    "free5": "Free · 6:00 PM – 7:00 PM",
+    "events": {
+      "standup": [
+        "Standup",
+        "9:30 AM – 10:30 AM"
+      ],
+      "review": [
+        "Design review",
+        "11:00 AM – 12:30 PM"
+      ],
+      "call": [
+        "Client call",
+        "2:30 PM – 4:00 PM"
+      ],
+      "planning": [
+        "Sprint planning",
+        "4:30 PM – 6:00 PM"
+      ],
+      "dinner": [
+        "Dinner with Maya",
+        "7:00 PM – 8:30 PM"
+      ]
+    },
+    "run": "Morning run",
+    "runTime": "7:00 AM",
+    "gym": "Gym",
+    "gymDetail": "12:30 PM · 45 min",
+    "free6": "Free · 8:30 PM – 11:00 PM"
+  },
+  "notification": {
+    "_note": "The four reminders follow the voice samples the app shows when you pick a coach (CoachVoice.sample in ios/Habitnex/Models/Profile.swift), fitted to this day: 12:30 PM, Gym, 45 minutes, free until 2:30 PM.",
+    "title": "Gym",
+    "now": "now",
+    "friendly": "Meetings are done, Alex! Gym time: just 45 minutes. You've got this!",
+    "strict": "It's 12:30 PM, Alex. You committed to 45 minutes at the gym. Follow through.",
+    "sarcastic": "Free until 2:30 PM, Alex. 45 minutes. Those weights won't lift themselves.",
+    "calm": "Gym starts now: 45 minutes, then you're free until 2:30 PM.",
+    "actions": [
+      "Done",
+      "Later (15 Min)",
+      "Do a Shorter Version",
+      "Skip Today"
+    ],
+    "punch": {
+      "_note": "The few words of each reminder that carry its tone. They are shown large beside the card, and must appear in the reminder exactly as written here.",
+      "strict": "Follow through.",
+      "sarcastic": "Those weights won't lift themselves.",
+      "calm": "Gym starts now",
+      "friendly": "You've got this!"
+    }
+  },
+  "later": {
+    "summary": "Thu, Oct 8 · 3 events · 7h free",
+    "month": "October 2026",
+    "coachLabel": "Coach · From your calendar",
+    "adaptText": "Gym got snoozed 3 times this week. Want to make it easier?",
+    "seeSuggestion": "See Suggestion",
+    "free1": "Free · 7:00 AM – 10:00 AM",
+    "events": {
+      "standup": [
+        "Standup",
+        "10:00 AM – 11:00 AM"
+      ]
+    }
+  },
+  "adapt": {
+    "eyebrow": "Coach suggestion · last 7 days",
+    "title": "Gym keeps getting pushed back.",
+    "detail": "Snoozed: 3 · Kept: 2",
+    "tryThis": "Try this instead",
+    "loading": "Your coach is looking at your week…",
+    "options": [
+      [
+        "Start at 12:30",
+        "You usually start about 30 min late, so plan for when you actually go."
+      ],
+      [
+        "Skip Wednesdays",
+        "Wednesday worked 1 of 4 times. Fewer, reliable days beat a plan you miss."
+      ],
+      [
+        "Make it 35 min",
+        "Still a real session, and easier to start. Go back to 45 once it sticks."
+      ]
+    ],
+    "apply": [
+      "Apply: Start at 12:30",
+      "Apply: Skip Wednesdays"
+    ],
+    "changeBack": "You can change it back anytime.",
+    "keep": [
+      "Keep it as is",
+      "45 min at 12:00. I'll stop suggesting for now."
+    ],
+    "choose": "Choose an Option"
+  },
+  "progress": {
+    "title": "Progress",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "yourReview": "Your review",
+    "reviewSub": "Story recap with your coach's verdict",
+    "week": "Week",
+    "month": "Month",
+    "streakTitle": "Current streak",
+    "streakUnit": "days",
+    "streakNote": "in a row",
+    "keptTitle": "Habits kept",
+    "keptNote": "24 of 26",
+    "chartTitle": "Kept per day",
+    "kept": "Kept",
+    "planned": "Planned",
+    "byHabit": "By habit",
+    "rows": [
+      [
+        "Morning run",
+        "3 of 3"
+      ],
+      [
+        "Gym",
+        "4 of 5"
+      ]
+    ]
+  },
+  "voiceLabels": {
+    "strict": "Strict\nCoach",
+    "friendly": "Friendly\nCoach",
+    "sarcastic": "Sarcastic\nFriend",
+    "calm": "Calm\nAssistant"
+  },
+  "voiceover": {
+    "_note": "What the narrator says, in order. It is recorded as one continuous take (so it sounds like one person talking, not a row of clips) and then cut into these lines, which the film places on the picture. The four coach names are said as their cards appear.",
+    "narration": [
+      [
+        "hook",
+        "Most habit apps have never seen your calendar."
+      ],
+      [
+        "has",
+        "Habitnex has."
+      ],
+      [
+        "gap",
+        "And it finds the gap."
+      ],
+      [
+        "voice",
+        "Your coach talks your way."
+      ],
+      [
+        "strict",
+        "Strict."
+      ],
+      [
+        "sarcastic",
+        "Sarcastic."
+      ],
+      [
+        "calm",
+        "Calm."
+      ],
+      [
+        "friendly",
+        "Or friendly."
+      ],
+      [
+        "reminder",
+        "Answer right from the reminder."
+      ],
+      [
+        "adaptA",
+        "Busy week?"
+      ],
+      [
+        "adaptB",
+        "It adjusts the plan."
+      ],
+      [
+        "chat",
+        "Or just tell your coach."
+      ],
+      [
+        "progress",
+        "And see what's actually sticking."
+      ],
+      [
+        "year",
+        "Day by day, all year."
+      ],
+      [
+        "end",
+        "Habitnex. Habits that actually stick."
+      ]
+    ]
+  },
+  "chat": {
+    "_note": "The Coach tab. The four suggestions marked ✨ and the coach's reply are written by the AI in the app, so these are examples of what it says; the other starters, the suggestion card and its buttons are the app's own.",
+    "title": "Coach",
+    "intro": "Hey Alex! I can see your habits and how they're going. Ask me anything, or tell me what's getting in the way.",
+    "starters": [
+      "How am I doing?",
+      "Make my plan easier",
+      "I'm sick this week",
+      "What should I focus on?"
+    ],
+    "user": "I'm sick this week",
+    "reply": "Feel better, Alex. Want me to pause Gym until Sunday? Paused days don't count against you.",
+    "suggested": "Suggested change",
+    "applied": "Applied",
+    "proposalTitle": "Pause Gym",
+    "proposalDetail": "until Sun, Oct 11",
+    "preview": "Preview",
+    "apply": "Apply",
+    "view": "View",
+    "done": "Done",
+    "placeholder": "Message your coach",
+    "personal": [
+      "Why do I keep snoozing Gym?",
+      "Is noon the right time for Gym?",
+      "How is Morning run going?",
+      "What's my best day?"
+    ]
+  },
+  "year": {
+    "nav": "Details",
+    "year": "2026",
+    "habit": "Gym",
+    "kept": "Kept",
+    "skipped": "Skipped",
+    "missed": "Missed",
+    "everyDay": "Every day",
+    "byMonth": "By month",
+    "legend": [
+      "Kept",
+      "Snoozed",
+      "Skipped or missed"
+    ],
+    "months": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ]
+  }
+}

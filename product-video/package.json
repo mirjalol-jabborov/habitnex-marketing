@@ -1,0 +1,16 @@
+{
+  "name": "habitnex-product-video",
+  "version": "1.0.0",
+  "description": "The Habitnex product video, rendered from HTML with headless Chrome and ffmpeg.",
+  "scripts": {
+    "voice": "node tools/voice.mjs",
+    "render": "node tools/render.mjs",
+    "frames": "node tools/shot.mjs"
+  },
+  "type": "module",
+  "dependencies": {
+    "ffmpeg-static": "^5.3.0",
+    "puppeteer-core": "^25.12.0"
+  },
+  "private": true
+}

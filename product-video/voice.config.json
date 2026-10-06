@@ -1,0 +1,23 @@
+{
+  "_note": "Who narrates and how. `names` are voices to look for in your ElevenLabs account, best first; the first one the account is allowed to use is taken (or pass --voice). `direction` is a delivery note the model follows without saying it aloud. `stability` 0.5 is the model's normal setting: lower is more varied, higher is flatter. `say` is the macOS voice used by --provider say, for timing tests only.",
+  "model": "eleven_v4",
+  "fallbackModel": "eleven_v3",
+  "narrator": {
+    "names": [
+      "Liam",
+      "Charlie",
+      "Alice",
+      "Chris",
+      "Sarah"
+    ],
+    "direction": "[warm, upbeat, confident]",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.8,
+      "style": 0.4,
+      "use_speaker_boost": true
+    },
+    "say": "Samantha",
+    "sayRate": 185
+  }
+}
