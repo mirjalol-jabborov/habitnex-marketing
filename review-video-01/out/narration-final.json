@@ -1,0 +1,47 @@
+{
+  "voice": "Sarah - Mature, Reassuring, Confident",
+  "model": "eleven_v4",
+  "tempo": 0.85,
+  "lead": 0.7,
+  "tail": 1.2,
+  "speechStart": 0.03,
+  "speechEnd": 18.29,
+  "guideOffBy": -0.02,
+  "phrases": [
+    {
+      "text": "Your meeting ran late.",
+      "start": 0.03,
+      "how": "first sound"
+    },
+    {
+      "text": "Does your workout disappear?",
+      "start": 2.09,
+      "how": "after a pause"
+    },
+    {
+      "text": "I’m building Habitnex to help habits fit around your calendar.",
+      "start": 4.4,
+      "how": "after a pause"
+    },
+    {
+      "text": "Talk to the coach,",
+      "start": 9.12,
+      "how": "after a pause"
+    },
+    {
+      "text": "review the suggested change,",
+      "start": 10.36,
+      "how": "after a short pause"
+    },
+    {
+      "text": "then apply it when it works for you.",
+      "start": 12.6,
+      "how": "after a short pause"
+    },
+    {
+      "text": "Join the waitlist at Habitnex dot io.",
+      "start": 15.14,
+      "how": "after a pause"
+    }
+  ]
+}

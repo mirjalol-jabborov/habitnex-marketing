@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Habitnex review draft 01 · revision 2</title>
+<style>
+  @font-face { font-family: "Onest"; font-weight: 800; src: url("../product-video/assets/onest-latin-800-normal.woff2") format("woff2"); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #fff; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+  #phone { position: absolute; left: 0; top: 0; width: 780px; height: 1696px; transform-origin: 0 0; }
+  #bezel { position: absolute; inset: -12px; border-radius: 132px; background: #060607; box-shadow: 0 0 0 2px #4a4a4e, 0 0 0 5px #1b1b1d; }
+  #shots { position: absolute; inset: 0; border-radius: 120px; overflow: hidden; background: #f2f2f7; }
+  #shots img { position: absolute; left: 0; top: 0; width: 780px; height: 1696px; display: block; }
+  /* Emphasis: everything outside this box is dimmed a little. It is drawn by the film, not the app. */
+  #focus { position: absolute; border-radius: 30px; pointer-events: none; }
+  /* Captions: plain white type on the black above the phone; the phone never shows behind them. */
+  #shade { position: absolute; left: 0; top: 0; width: 1080px; height: 430px; background: linear-gradient(to bottom, #000 74%, rgba(0, 0, 0, 0)); }
+  .cap { position: absolute; left: 60px; width: 960px; top: 112px; height: 240px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 68px; line-height: 1.12; font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; }
+  .cap.hook { font-size: 86px; }
+  #label { position: absolute; left: 0; width: 1080px; top: 52px; height: 36px; font-size: 28px; font-weight: 600; letter-spacing: 0.01em; color: rgba(255, 255, 255, 0.6); }
+  #label span { position: absolute; left: 0; width: 1080px; text-align: center; }
+  #label-calendar { color: rgba(255, 255, 255, 0.85); } /* the opening calendar is a rebuilt screen, not a capture */
+  #end { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  #lockup { display: flex; align-items: center; gap: 30px; }
+  #mark { position: relative; width: 138px; height: 138px; }
+  #mark div { position: absolute; }
+  #word { font-family: "Onest", sans-serif; font-weight: 800; font-size: 122px; letter-spacing: -0.05em; line-height: 1; padding-bottom: 12px; }
+  #join { font-size: 78px; font-weight: 800; letter-spacing: -0.02em; margin-top: 100px; }
+  #site { font-size: 82px; font-weight: 800; letter-spacing: -0.02em; margin-top: 26px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="phone">
+    <div id="bezel"></div>
+    <div id="shots">
+      <img id="s-today" src="captures/today-timeline-rebuilt.png">
+      <img id="s-chat" src="captures/coach-chat.png">
+      <img id="s-preview" src="captures/move-gym-preview.png">
+      <div id="focus"></div>
+    </div>
+  </div>
+  <div id="shade"></div>
+  <div class="cap hook">Your meeting ran late.</div>
+  <div class="cap">Does your workout disappear?</div>
+  <div class="cap">I’m building Habitnex to help habits fit around your calendar.</div>
+  <div class="cap">Talk to the coach,</div>
+  <div class="cap">review the suggested change,</div>
+  <div class="cap">then apply it when it works for you.</div>
+  <div id="end">
+    <div id="lockup"><div id="mark"><div></div><div></div><div></div></div><div id="word">habitnex</div></div>
+    <div id="join">Join the waitlist</div>
+    <div id="site">habitnex.io</div>
+  </div>
+  <div id="label"><span id="label-demo">Demo · In development</span><span id="label-calendar">Illustrative calendar · Demo</span></div>
+</div>
+<script>
+// Revision 2: the narration at its natural speed, the picture cut to its real pauses.
+// Every frame is a function of time: seek(t) lays out second t. Nothing is tapped: the film
+// only frames, zooms and dims around what the captures already show.
+const clamp01 = (x) => Math.max(0, Math.min(1, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const inOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const linear = (x) => x;
+const prog = (t, start, dur, ease = inOut) => ease(clamp01((t - start) / dur));
+const $ = (s) => document.querySelector(s);
+let T, CAMERA, FOCUS;
+
+function plan(narration) {
+  const lead = narration.lead;
+  const p = narration.phrases.map((phrase) => phrase.start + lead); // when each line starts in the film
+  const end = p[6] - 0.3;              // the waitlist card arrives just before "Join the waitlist…"
+  const urlClear = end + 0.55;         // habitnex.io is fully opaque from here
+  T = {
+    lead, p, end, urlClear,
+    toChat: p[2] - 0.3,                               // cut: calendar → the real Coach tab
+    closeUp: p[2] + 0.55 * (p[3] - p[2]),             // in on the message, mid-sentence
+    bubbles: p[3] - 0.15, change: p[4] - 0.15, previewButton: p[4] + 0.5,
+    sheet: p[4] + 0.95,                               // cut: chat → the real Preview sheet
+    apply: p[5] - 0.1,
+    captions: [[-1, p[1] - 0.3], [p[1] - 0.05, p[2] - 0.32], [p[2] - 0.05, p[3] - 0.3], [p[3] - 0.05, p[4] - 0.28], [p[4] - 0.05, p[5] - 0.28], [p[5] - 0.05, end - 0.22]],
+    duration: Math.ceil(Math.max(urlClear + 3.2, narration.speechEnd + lead + narration.tail) * 10 - 1e-6) / 10, // the address stays readable for over three seconds
+  };
+  // Camera: `fx`, `fy` are the point of the capture being looked at (0–1), `ty` where it sits
+  // in the frame, `s` the zoom. Each key is approached from its time, over `dur` seconds.
+  CAMERA = [
+    { at: 0, fx: 0.52, fy: 0.7, ty: 1180, s: 1.2 },
+    { at: 0.02, fx: 0.5, fy: 0.725, ty: 1180, s: 1.4, dur: 0.9, ease: out },                          // hook: straight in on the clash
+    { at: 0.92, fx: 0.5, fy: 0.73, ty: 1180, s: 1.44, dur: Math.max(0.3, p[1] - 1.05), ease: linear },
+    { at: p[1] - 0.1, fx: 0.56, fy: 0.765, ty: 1180, s: 1.46, dur: 0.45 },                             // the workout that's in the way
+    { at: p[1] + 0.35, fx: 0.56, fy: 0.767, ty: 1180, s: 1.5, dur: Math.max(0.3, T.toChat - p[1] - 0.4), ease: linear },
+    { at: T.toChat, fx: 0.5, fy: 0.5, ty: 1150, s: 0.92, dur: 0.4 },                                  // the Coach tab, whole screen
+    { at: T.toChat + 0.4, fx: 0.5, fy: 0.5, ty: 1150, s: 0.97, dur: T.closeUp - T.toChat - 0.4, ease: linear },
+    { at: T.closeUp, fx: 0.5, fy: 0.55, ty: 1090, s: 1.24, dur: 0.38 },                                // the message
+    { at: T.closeUp + 0.38, fx: 0.5, fy: 0.56, ty: 1090, s: 1.28, dur: Math.max(0.3, T.change - T.closeUp - 0.4), ease: linear },
+    { at: T.change, fx: 0.47, fy: 0.72, ty: 1120, s: 1.3, dur: 0.5 },                                 // the suggested change
+    { at: T.sheet, fx: 0.5, fy: 0.7, ty: 1170, s: 1.14, dur: 0.45 },                                  // the Preview sheet
+    { at: T.apply, fx: 0.5, fy: 0.79, ty: 1180, s: 1.24, dur: 0.6 },                                  // down to Apply
+    { at: T.apply + 0.6, fx: 0.5, fy: 0.795, ty: 1180, s: 1.28, dur: Math.max(0.3, end - T.apply - 0.7), ease: linear },
+  ];
+  // Emphasis box: [left, top, right, bottom] of the capture (0–1) and how far the rest is dimmed.
+  FOCUS = [
+    { at: 0, box: [0.19, 0.674, 0.565, 0.783], dim: 0 },
+    { at: 0.45, box: [0.19, 0.674, 0.565, 0.783], dim: 0.34, dur: 0.35 },          // the meeting
+    { at: p[1] - 0.1, box: [0.555, 0.741, 0.94, 0.801], dim: 0.4, dur: 0.4 },       // Gym
+    { at: T.toChat - 0.16, box: [0.555, 0.741, 0.94, 0.801], dim: 0, dur: 0.14 },
+    { at: T.bubbles, box: [0.03, 0.42, 0.97, 0.645], dim: 0.3, dur: 0.35 },         // the message and the coach's reply
+    { at: T.change, box: [0.03, 0.64, 0.8, 0.816], dim: 0.32, dur: 0.4 },           // the suggested change
+    { at: T.previewButton, box: [0.066, 0.742, 0.41, 0.8], dim: 0.36, dur: 0.3 },   // its Preview button
+    { at: T.sheet - 0.1, box: [0.066, 0.742, 0.41, 0.8], dim: 0, dur: 0.1 },
+    { at: T.sheet + 0.3, box: [0.06, 0.54, 0.94, 0.748], dim: 0.2, dur: 0.3 },      // what changes: Wed 19:00 → 18:00
+    { at: T.apply, box: [0.06, 0.862, 0.94, 0.94], dim: 0.3, dur: 0.45 },           // Apply, when it suits
+    { at: end - 0.4, box: [0.06, 0.862, 0.94, 0.94], dim: 0, dur: 0.25 },
+  ];
+}
+
+function seek(t) {
+  // Camera
+  let c = { ...CAMERA[0] };
+  for (const key of CAMERA.slice(1)) {
+    if (t <= key.at) break;
+    const q = prog(t, key.at, key.dur, key.ease ?? inOut);
+    for (const k of ["fx", "fy", "ty", "s"]) c[k] = lerp(c[k], key[k], q);
+  }
+  const leave = prog(t, T.end - 0.35, 0.4);
+  const phone = $("#phone");
+  phone.style.transform = `translate(${540 - c.fx * 780 * c.s}px, ${c.ty - c.fy * 1696 * c.s + 220 * leave}px) scale(${c.s})`;
+  phone.style.opacity = 1 - leave;
+
+  // Calendar → Coach tab: a sideways push inside the phone. Chat → Preview: the sheet rises.
+  const push = prog(t, T.toChat, 0.34);
+  $("#s-today").style.transform = `translateX(${-780 * push}px)`;
+  $("#s-chat").style.transform = `translateX(${780 * (1 - push)}px)`;
+  $("#label-calendar").style.opacity = 1 - prog(t, T.toChat, 0.2);
+  $("#label-demo").style.opacity = prog(t, T.toChat + 0.1, 0.2);
+  const sheet = prog(t, T.sheet, 0.36, out);
+  const preview = $("#s-preview");
+  preview.style.opacity = clamp01(sheet * 3);
+  preview.style.clipPath = `inset(${(1 - sheet) * 52}% 0 0 0)`;
+  preview.style.transform = `translateY(${(1 - sheet) * 60}px)`;
+
+  // Emphasis
+  let f = { box: [...FOCUS[0].box], dim: FOCUS[0].dim };
+  for (const key of FOCUS.slice(1)) {
+    if (t <= key.at) break;
+    const q = prog(t, key.at, key.dur);
+    f = { box: f.dim < 0.01 ? [...key.box] : f.box.map((v, i) => lerp(v, key.box[i], q)), dim: lerp(f.dim, key.dim, q) }; // it appears in place, and glides between places
+  }
+  const focus = $("#focus");
+  Object.assign(focus.style, { left: f.box[0] * 780 + "px", top: f.box[1] * 1696 + "px", width: (f.box[2] - f.box[0]) * 780 + "px", height: (f.box[3] - f.box[1]) * 1696 + "px", boxShadow: `0 0 0 4000px rgba(0, 0, 0, ${f.dim.toFixed(3)})` });
+
+  // Captions. The first is on screen from the first frame.
+  document.querySelectorAll(".cap").forEach((cap, i) => {
+    const [from, to] = T.captions[i];
+    const enter = i === 0 ? 1 : prog(t, from, 0.26, out), exit = prog(t, to, 0.2);
+    cap.style.opacity = enter * (1 - exit);
+    cap.style.transform = i === 0 ? `scale(${lerp(1.07, 1, prog(t, 0, 0.6, out))}) translateY(${-exit * 14}px)` : `translateY(${(1 - enter) * 22 - exit * 14}px)`;
+  });
+
+  // End card
+  const end = $("#end");
+  end.style.display = t < T.end - 0.05 ? "none" : "";
+  const e = (delay, dur) => prog(t, T.end + delay, dur, out);
+  [["#lockup", 0.05, 0.4], ["#join", 0.15, 0.4], ["#site", 0.2, 0.35]].forEach(([id, delay, dur]) => {
+    $(id).style.opacity = e(delay, dur);
+    $(id).style.transform = `translateY(${(1 - e(delay, dur)) * 24}px)`;
+  });
+}
+
+const U = 138 / 30; // the Slot mark: a 30 × 30 unit box
+[[0, 0, 22, 7, "#48484a"], [8, 10, 22, 10, "#fff"], [0, 23, 22, 7, "#48484a"]].forEach(([x, y, w, h, color], i) => {
+  Object.assign(document.querySelectorAll("#mark div")[i].style, { left: x * U + "px", top: y * U + "px", width: w * U + "px", height: h * U + "px", borderRadius: 2.5 * U + "px", background: color });
+});
+Promise.all([fetch("out/narration-rev2.json").then((r) => r.json()).then(plan), document.fonts.load('800 100px "Onest"', "habitnex"), ...[...document.images].map((img) => img.decode())]).then(() => {
+  window.TIMES = T;
+  window.seek = seek;
+  seek(Number(new URLSearchParams(location.search).get("t") ?? 0));
+  window.READY = true;
+});
+</script>
+</body>
+</html>

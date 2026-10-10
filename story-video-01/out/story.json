@@ -1,0 +1,42 @@
+{
+  "voice": "Sarah - Mature, Reassuring, Confident",
+  "model": "eleven_v4",
+  "lead": 0.35,
+  "tail": 1,
+  "gaps": [
+    1,
+    2,
+    1,
+    1
+  ],
+  "p": [
+    0.38,
+    2.12,
+    3.94,
+    5.38,
+    8.94,
+    10.38,
+    13.2,
+    14.28,
+    16.61
+  ],
+  "segmentEnds": [
+    2.91,
+    6.91,
+    12.17,
+    15.58,
+    18.98
+  ],
+  "speechEnd": 18.98,
+  "phrases": [
+    "He cancelled on himself.",
+    "Again.",
+    "His gym bag was packed,",
+    "but one meeting ran late.",
+    "So he tried Habitnex",
+    "and asked the coach for a different time.",
+    "He could check the suggestion",
+    "before changing his plan.",
+    "Join the waitlist at Habitnex dot io."
+  ]
+}

@@ -1,0 +1,16 @@
+/* Written by tools/measure.py from the captures. Don't edit: run it again. */
+.chat-question { --x: 380; --y: 1298; --cw: 894; --ch: 195; }
+.chat-answer { --x: 44; --y: 1527; --cw: 844; --ch: 393; }
+.chat-change { --x: 44; --y: 1936; --cw: 906; --ch: 439; }
+.today-card { --x: 48; --y: 832; --cw: 1222; --ch: 477; }
+.today-walk { --x: 86; --y: 1739; --cw: 1146; --ch: 164; }
+.voice-1 { --x: 60; --y: 754; --cw: 1200; --ch: 263; }
+.voice-2 { --x: 60; --y: 1055; --cw: 1200; --ch: 203; }
+.voice-3 { --x: 60; --y: 1295; --cw: 1200; --ch: 205; }
+.voice-4 { --x: 60; --y: 1537; --cw: 1200; --ch: 263; }
+.year-days { --x: 48; --y: 876; --cw: 1224; --ch: 426; }
+.year-months { --x: 48; --y: 1350; --cw: 1224; --ch: 1400; }
+.health { --x: 14; --y: 2096; --cw: 1292; --ch: 452; }
+.log { --x: 48; --y: 780; --cw: 1224; --ch: 1118; }
+.share-card { --x: 60; --y: 696; --cw: 1200; --ch: 1500; }
+.hourglass { left: 572px; top: 2226px; }

@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Habitnex story draft 03 · Perfect reminder. Impossible timing.</title>
+<style>
+  @font-face { font-family: "Onest"; font-weight: 800; src: url("../product-video/assets/onest-latin-800-normal.woff2") format("woff2"); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #C6E8FF; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #15171C; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #C6E8FF; }
+  #art { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  #art text { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; text-anchor: middle; }
+  /* The real app captures, inside a plain bezel. */
+  #phone { position: absolute; left: 0; top: 0; width: 780px; height: 1696px; transform-origin: 0 0; }
+  #bezel { position: absolute; inset: -12px; border-radius: 132px; background: #060607; box-shadow: 0 0 0 2px #4a4a4e, 0 0 0 5px #1b1b1d; }
+  #shots { position: absolute; inset: 0; border-radius: 120px; overflow: hidden; background: #f2f2f7; }
+  #shots img { position: absolute; left: 0; top: 0; width: 780px; height: 1696px; display: block; }
+  #focus { position: absolute; border-radius: 30px; pointer-events: none; } /* emphasis drawn by the film, not the app */
+  #shade { position: absolute; left: 0; top: 0; width: 1080px; height: 430px; background: linear-gradient(to bottom, #C6E8FF 372px, rgba(198, 232, 255, 0) 412px); }
+  .cap { position: absolute; left: 60px; width: 960px; top: 112px; height: 240px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 70px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; }
+  .cap.long { font-size: 60px; }
+  #end { position: absolute; left: 0; top: 400px; width: 1080px; display: flex; flex-direction: column; align-items: center; }
+  #lockup { display: flex; align-items: center; gap: 28px; }
+  #tile { position: relative; width: 132px; height: 132px; border-radius: 30px; background: #000; }
+  #tile div { position: absolute; }
+  #word { font-family: "Onest", sans-serif; font-weight: 800; font-size: 122px; letter-spacing: -0.05em; line-height: 1; padding-bottom: 12px; }
+  #dev { font-size: 44px; font-weight: 700; margin-top: 26px; padding: 12px 30px; border-radius: 40px; background: rgba(21, 23, 28, 0.1); }
+  #join { font-size: 78px; font-weight: 800; letter-spacing: -0.02em; margin-top: 56px; }
+  #site { font-size: 92px; font-weight: 800; letter-spacing: -0.02em; margin-top: 20px; }
+  /* The day as a tilted board: an illustration of the same events the real screens show. */
+  #cal3d { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; perspective: 1900px; perspective-origin: 42% 50%; }
+  #board { position: absolute; left: 150px; top: 360px; width: 640px; height: 880px; transform-style: preserve-3d; }
+  #board > div { position: absolute; }
+  .b-shadow { inset: 30px -10px -30px 30px; border-radius: 40px; background: rgba(21, 23, 28, 0.2); filter: blur(22px); transform: translateZ(-60px); }
+  .b-card { inset: 0; border-radius: 34px; background: #fff; }
+  .b-head { left: 0; top: 0; width: 640px; height: 74px; border-radius: 34px 34px 0 0; background: #FFD23F; font-size: 32px; font-weight: 800; line-height: 74px; padding-left: 34px; }
+  .b-hour { left: 22px; width: 596px; height: 0; border-top: 3px solid rgba(21, 23, 28, 0.1); font-size: 23px; font-weight: 700; color: rgba(21, 23, 28, 0.5); line-height: 30px; }
+  .b-block { left: 118px; width: 500px; border-radius: 16px; color: #fff; font-size: 31px; font-weight: 800; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 7px 0 rgba(21, 23, 28, 0.2); white-space: nowrap; }
+  .b-block small { font-size: 25px; font-weight: 700; opacity: 0.92; }
+  .b-block.tall { align-items: flex-start; padding-top: 12px; }             /* its name sits at its start, clear of what overlaps it later */
+  .b-block.short, .b-block.short small { font-size: 19px; border-radius: 8px; }
+  .b-free { left: 118px; width: 500px; border-radius: 16px; border: 5px dashed rgba(21, 23, 28, 0.55); background: rgba(255, 210, 63, 0.45); color: #15171C; font-size: 34px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+  .b-free.quiet { border-color: rgba(21, 23, 28, 0.3); background: rgba(255, 210, 63, 0.16); }
+  .b-scan { left: 100px; width: 530px; height: 6px; border-radius: 3px; background: #15171C; }
+  .b-scan::before { content: ""; position: absolute; left: -8px; top: -8px; width: 22px; height: 22px; border-radius: 50%; background: #15171C; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="art" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div id="cal3d"><div id="board"></div></div>
+  <div id="phone">
+    <div id="bezel"></div>
+    <div id="shots">
+      <img id="s-today" src="../story-video-02/captures/today-fixture-real.png">
+      <img id="s-chat" src="../story-video-02/captures/chat-fixture-real.png">
+      <div id="focus"></div>
+    </div>
+  </div>
+  <div id="shade"></div>
+  <div id="caps"></div>
+  <div id="end">
+    <div id="lockup"><div id="tile"><div></div><div></div><div></div></div><div id="word">habitnex</div></div>
+    <div id="dev">In development</div>
+    <div id="join">Join the waitlist</div>
+    <div id="site">habitnex.io</div>
+  </div>
+</div>
+<script>
+// Story draft 03: "Perfect reminder. Impossible timing." Nina (drawn here from simple shapes)
+// gets a gym reminder at 18:00 while she is still in a meeting. Her day is told with an
+// illustrated planner; then the real app screens show the product, and the same day comes back
+// as a tilted board. Every frame is a function of time: seek(t) draws second t. The timing
+// follows the narration (out/story3.json, from timing.mjs).
+const clamp01 = (x) => Math.max(0, Math.min(1, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const inOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const inn = (x) => x * x * x;
+const linear = (x) => x;
+const prog = (t, start, dur, ease = inOut) => ease(clamp01((t - start) / dur));
+function spring(t, start, response = 0.5, damping = 0.7) {
+  const x = t - start;
+  if (x <= 0) return 0;
+  const w0 = (2 * Math.PI) / response, wd = w0 * Math.sqrt(1 - damping * damping);
+  return 1 - Math.exp(-damping * w0 * x) * (Math.cos(wd * x) + ((damping * w0) / wd) * Math.sin(wd * x));
+}
+const kick = (t, at, response = 0.35, damping = 0.45) => (t >= at ? 1 - spring(t, at, response, damping) : 0);
+const blink = (u, at) => clamp01(1 - Math.abs(u - at) / 0.09);
+const $ = (s) => document.querySelector(s);
+const n = (x) => Number(x.toFixed(2));
+
+const C = { ink: "#15171C", top: "#F0468C", trousers: "#27304A", skin: "#DFA075", hair: "#2A1A14", bag: "#12B5A2", bagDark: "#0C8F80", red: "#E5432E", ok: "#17A673",
+  wood: "#F1CF9E", woodDark: "#DDB67F", sun: "#FFD23F", gym: "#FF6B2C", slate: "#8FA0C4", purple: "#7C5CF0", report: "#17A673", wall: "#4B35C4" };
+
+// ---------- The one day every calendar in the film shows: Thursday 8 October 2026 ----------
+const EVENTS = [["Standup", 9.5, 10, C.slate], ["Focus work", 15, 16.5, C.slate], ["Team meeting", 16.5, 19, C.purple], ["Client report", 19, 20, C.report]];
+const GYM = [18, 19];                 // the time she picked: 18:00, an hour
+const OPEN = [[10, 15], [20, 23]];    // the space between the events; the coach's answer names 20:00–23:00
+const hh = (h) => { const m = Math.round(h * 60); return `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`; };
+const span = (from, to) => `${hh(from)}–${hh(to)}`;
+
+// ---------- Characters ----------
+function arm(sx, sy, hx, hy, side, extra, shirt, skin) {
+  const L = 178;
+  let dx = hx - sx, dy = hy - sy, d = Math.hypot(dx, dy);
+  const reach = Math.min(d, 2 * L - 2);
+  if (d > reach) { dx *= reach / d; dy *= reach / d; hx = sx + dx; hy = sy + dy; d = reach; }
+  const base = Math.atan2(dy, dx), bend = Math.acos(d / (2 * L));
+  const a = [sx + L * Math.cos(base + bend), sy + L * Math.sin(base + bend)], b = [sx + L * Math.cos(base - bend), sy + L * Math.sin(base - bend)];
+  const e = (side > 0 ? a[0] > b[0] : a[0] < b[0]) ? a : b;
+  return `<polyline points="${n(sx)},${n(sy)} ${n(e[0])},${n(e[1])} ${n(hx)},${n(hy)}" fill="none" stroke="${shirt}" stroke-width="62" stroke-linecap="round" stroke-linejoin="round"/>${extra}<circle cx="${n(hx)}" cy="${n(hy)}" r="34" fill="${skin}"/>`;
+}
+const NINA = { shirt: C.top, hair: C.hair, skin: C.skin, style: "bun" };
+const ANNA = { shirt: "#F2A72E", hair: "#7A3E1D", skin: "#F0C7A2", style: "bob" };
+const OMAR = { shirt: "#3B5BDB", hair: "#1E1E24", skin: "#B97A56", style: "short" };
+/** A small reminder on a phone she is holding: a white banner on a plain wallpaper. */
+const smallBanner = `<rect x="-38" y="-150" width="76" height="40" rx="9" fill="#fff"/><rect x="-32" y="-143" width="14" height="14" rx="4" fill="${C.gym}"/><rect x="-13" y="-141" width="30" height="5" rx="2.5" fill="rgba(21,23,28,.35)"/><rect x="-32" y="-124" width="60" height="7" rx="3.5" fill="${C.ink}"/>`;
+
+/**
+ * A character, feet at (x, y). Hands are targets (L, R) in their own coordinates: shoulders at
+ * (±112, -600), hands hang at (±150, -290), the middle of the face is (0, -790).
+ * brow: -1 worried … +1 raised. mouth: -1 frown … +1 smile. talk: 0–1 opens the mouth.
+ * phone: "L" or "R" hand holds one, showing `screen`. `look` sets shirt, hair, skin and hairstyle.
+ */
+function person({ x, y, k = 1, lean = 0, head = 0, L = [-150, -290], R = [150, -290], brow = 0, mouth = 0, talk = 0, gaze = [0, 0], shut = 0, legs = true, phone = false, screen = "", look = NINA }) {
+  const { shirt, hair, skin, style } = look;
+  const sad = Math.max(0, -brow), up = Math.max(0, brow);
+  const eye = (ex) => `<ellipse cx="${n(ex + gaze[0])}" cy="${n(-98 + gaze[1])}" rx="10" ry="${n(10 * (1 - shut) + 1.6)}" fill="${C.ink}"/>
+    <line x1="-18" y1="0" x2="18" y2="0" stroke="${hair}" stroke-width="8" stroke-linecap="round" transform="translate(${ex} ${n(-130 - 8 * up)}) rotate(${n(Math.sign(ex) * 17 * sad)})"/>`;
+  const hand = phone === "L" ? L : R;
+  const held = phone ? `<g transform="translate(${n(hand[0])} ${n(hand[1])}) rotate(${phone === "L" ? -7 : 7})"><rect x="-54" y="-178" width="108" height="208" rx="20" fill="${C.ink}"/><rect x="-45" y="-168" width="90" height="188" rx="11" fill="${C.wall}"/>${screen}</g>` : "";
+  const behind = style === "bob" ? `<rect x="-126" y="-176" width="252" height="176" rx="64" fill="${hair}"/>` : style === "bun" ? `<circle cx="0" cy="-224" r="50" fill="${hair}"/><rect x="-121" y="-170" width="242" height="150" rx="62" fill="${hair}"/>` : "";
+  const cap = style === "bun" ? "M -108 -112 A 108 108 0 0 1 108 -112 Q 84 -162 34 -172 Q -30 -152 -108 -110 Z" : "M -108 -112 A 108 108 0 0 1 108 -112 Q 60 -152 0 -142 Q -62 -132 -108 -112 Z";
+  return `<g transform="translate(${n(x)} ${n(y)}) scale(${n(k)})">
+    ${legs ? `<rect x="-118" y="-310" width="102" height="300" rx="30" fill="${C.trousers}"/><rect x="16" y="-310" width="102" height="300" rx="30" fill="${C.trousers}"/>
+      <rect x="-134" y="-36" width="128" height="44" rx="20" fill="${C.ink}"/><rect x="10" y="-36" width="128" height="44" rx="20" fill="${C.ink}"/>` : ""}
+    <g transform="rotate(${n(lean)} 0 -330)">
+      <rect x="-125" y="-352" width="250" height="80" rx="24" fill="${C.trousers}"/>
+      <rect x="-27" y="-715" width="54" height="90" fill="${skin}"/>
+      <rect x="-125" y="-640" width="250" height="322" rx="58" fill="${shirt}"/>
+      <path d="M -46 -641 L 0 -590 L 46 -641 Z" fill="${style === "bun" ? skin : "#fff"}"/>
+      <g transform="translate(0 -690) rotate(${n(head)})">
+        ${behind}
+        <circle cx="-108" cy="-95" r="18" fill="${skin}"/><circle cx="108" cy="-95" r="18" fill="${skin}"/>
+        ${style === "bun" ? `<circle cx="-112" cy="-68" r="9" fill="${C.sun}"/><circle cx="112" cy="-68" r="9" fill="${C.sun}"/>` : ""}
+        <circle cx="0" cy="-100" r="108" fill="${skin}"/>
+        <path d="${cap}" fill="${hair}"/>
+        ${eye(-38)}${eye(38)}
+        ${talk > 0.02 ? `<ellipse cx="0" cy="-44" rx="17" ry="${n(3 + 11 * talk)}" fill="${C.ink}"/>` : `<path d="M -26 -50 Q 0 ${n(-50 + 24 * mouth)} 26 -50" fill="none" stroke="${C.ink}" stroke-width="8" stroke-linecap="round"/>`}
+      </g>
+      ${arm(-112, -600, L[0], L[1], -1, phone === "L" ? held : "", shirt, skin)}
+      ${arm(112, -600, R[0], R[1], 1, phone && phone !== "L" ? held : "", shirt, skin)}
+    </g>
+  </g>`;
+}
+const bust = (view, o) => person({ x: 540, y: lerp(2620, 2575, view), k: lerp(1.5, 1.15, view), ...o }); // head and shoulders under the planner; smaller when the planner shows the whole day
+
+// ---------- Props ----------
+function bag({ x, y, k = 1, rot = 0, sx = 1, sy = 1 }) {
+  return `<g transform="translate(${n(x)} ${n(y)}) rotate(${n(rot)}) scale(${n(k * sx)} ${n(k * sy)})">
+    <path d="M -92 -182 Q 0 -300 92 -182" fill="none" stroke="${C.ink}" stroke-width="18" stroke-linecap="round"/>
+    <rect x="-190" y="-195" width="380" height="195" rx="62" fill="${C.bag}"/>
+    <path d="M -190 -62 H 190 a 62 62 0 0 1 -62 62 H -128 a 62 62 0 0 1 -62 -62 Z" fill="${C.bagDark}"/>
+    <rect x="-140" y="-118" width="74" height="16" rx="8" fill="#fff" opacity=".9"/>
+    <line x1="-120" y1="-158" x2="120" y2="-158" stroke="${C.ink}" stroke-width="9" stroke-linecap="round" stroke-dasharray="2 14"/>
+    <circle cx="120" cy="-158" r="13" fill="#fff" stroke="${C.ink}" stroke-width="5"/>
+  </g>`;
+}
+function clock({ x, y, r, minutes, pop = 1, late = 0 }) {
+  const hand = (deg, length, width) => `<line x1="0" y1="0" x2="0" y2="${-length}" stroke="${C.ink}" stroke-width="${width}" stroke-linecap="round" transform="rotate(${n(deg)})"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${n(pop)})"><circle r="${r}" fill="#fff" stroke="${late > 0.5 ? C.red : C.ink}" stroke-width="${r * 0.11}"/>
+    ${[0, 90, 180, 270].map((d) => `<line x1="0" y1="${-r * 0.78}" x2="0" y2="${-r * 0.66}" stroke="${C.ink}" stroke-width="${r * 0.06}" stroke-linecap="round" transform="rotate(${d})"/>`).join("")}
+    ${hand((minutes / 720) * 360, r * 0.42, r * 0.1)}${hand((minutes % 60) * 6, r * 0.64, r * 0.07)}<circle r="${r * 0.07}" fill="${C.ink}"/></g>`;
+}
+/** A window: the sky goes from afternoon to dusk to night as `late` goes 0 → 1. */
+function windowPane({ x, y, w, h, late }) {
+  const mix = (a, b, p) => `rgb(${a.map((v, i) => Math.round(lerp(v, b[i], p))).join(",")})`;
+  const sky = late < 0.5 ? mix([174, 221, 255], [246, 160, 110], late * 2) : mix([246, 160, 110], [46, 52, 92], (late - 0.5) * 2);
+  return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="22" fill="${sky}"/>
+    <clipPath id="pane"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="22"/></clipPath>
+    <circle cx="${x + w * 0.68}" cy="${n(y + h * (0.3 + 0.95 * late))}" r="${w * 0.14}" fill="#FFE27A" clip-path="url(#pane)"/>
+    <circle cx="${x + w * 0.27}" cy="${y + h * 0.27}" r="${w * 0.085}" fill="#FDF6D8" opacity="${n(clamp01((late - 0.8) * 5))}"/><circle cx="${x + w * 0.77}" cy="${y + h * 0.2}" r="5" fill="#FDF6D8" opacity="${n(clamp01((late - 0.8) * 5))}"/><circle cx="${x + w * 0.66}" cy="${y + h * 0.5}" r="4" fill="#FDF6D8" opacity="${n(clamp01((late - 0.8) * 5))}"/>
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="22" fill="none" stroke="${C.ink}" stroke-width="14"/><line x1="${x + w / 2}" y1="${y}" x2="${x + w / 2}" y2="${y + h}" stroke="${C.ink}" stroke-width="10"/></g>`;
+}
+const floor = (y) => `<line x1="110" y1="${y}" x2="970" y2="${y}" stroke="rgba(21,23,28,.16)" stroke-width="8" stroke-linecap="round"/>`;
+const tick = (x, y, r, pop, fill = C.ok) => (pop <= 0.01 ? "" : `<g transform="translate(${x} ${y}) scale(${n(pop)})"><circle r="${r}" fill="${fill}" stroke="#fff" stroke-width="${r * 0.16}"/><path d="M ${-r * 0.42} ${r * 0.02} L ${-r * 0.1} ${r * 0.34} L ${r * 0.46} ${-r * 0.3}" fill="none" stroke="#fff" stroke-width="${r * 0.2}" stroke-linecap="round" stroke-linejoin="round"/></g>`);
+const dumbbell = (x, y, k, fill = "#fff") => `<g transform="translate(${x} ${y}) scale(${k})" fill="${fill}"><rect x="-16" y="-3.5" width="32" height="7" rx="3"/><rect x="-21" y="-12" width="8" height="24" rx="3"/><rect x="13" y="-12" width="8" height="24" rx="3"/></g>`;
+
+/** Her phone, seen from above: a plain lock screen at 18:00 and a reminder dropping in. Not the app. */
+function lockPhone({ x, y, k = 1, rot = 0, banner = 1, buzz = 0 }) {
+  const wave = (side, i) => `<path d="M ${side * (286 + i * 40)} ${-150 + i * -26} q ${side * 34} ${150 + i * 26} 0 ${300 + i * 52}" fill="none" stroke="${C.ink}" stroke-width="13" stroke-linecap="round" opacity="${n(buzz * (0.7 - i * 0.28))}"/>`;
+  return `<g transform="translate(${n(x)} ${n(y)}) rotate(${n(rot)}) scale(${n(k)})">
+    ${wave(1, 0)}${wave(1, 1)}${wave(-1, 0)}${wave(-1, 1)}
+    <rect x="-238" y="-489" width="500" height="1010" rx="84" fill="rgba(21,23,28,.2)"/>
+    <rect x="-250" y="-505" width="500" height="1010" rx="84" fill="${C.ink}"/>
+    <clipPath id="lock"><rect x="-230" y="-485" width="460" height="970" rx="66"/></clipPath>
+    <g clip-path="url(#lock)">
+      <rect x="-230" y="-485" width="460" height="970" fill="${C.wall}"/>
+      <circle cx="180" cy="350" r="270" fill="#6A52E0"/><circle cx="-200" cy="110" r="150" fill="#5A43D2"/>
+      <rect x="-62" y="-462" width="124" height="36" rx="18" fill="${C.ink}"/>
+      <text x="0" y="-336" font-size="38" font-weight="600" fill="rgba(255,255,255,.88)">Thursday 8 October</text>
+      <text x="0" y="-186" font-size="150" font-weight="800" fill="#fff" style="letter-spacing:-0.02em">18:00</text>
+      <g transform="translate(0 ${n(-440 * (1 - banner))})">
+        <rect x="-208" y="-118" width="416" height="184" rx="40" fill="#fff"/>
+        <rect x="-184" y="-96" width="46" height="46" rx="13" fill="${C.gym}"/>${dumbbell(-161, -73, 0.9)}
+        <text x="-124" y="-63" font-size="25" font-weight="700" fill="rgba(21,23,28,.55)" style="text-anchor:start;letter-spacing:.04em">REMINDER</text>
+        <text x="184" y="-63" font-size="25" font-weight="600" fill="rgba(21,23,28,.45)" style="text-anchor:end">now</text>
+        <text x="-184" y="-4" font-size="43" font-weight="800" fill="${C.ink}" style="text-anchor:start">Time for the gym</text>
+        <text x="-184" y="38" font-size="28" font-weight="600" fill="rgba(21,23,28,.55)" style="text-anchor:start">Gym · 18:00</text>
+      </g>
+    </g>
+  </g>`;
+}
+
+// ---------- The illustrated planner: her Thursday (drawn to look nothing like the app) ----------
+/**
+ * `view`: 0 is close on the afternoon and evening, 1 is the whole day, 09:00–23:00.
+ * `drop`: how far each of the four events has come down into place (0–1).
+ * `gym`: { pop, squeeze (0 full width … 1 squeezed beside the meeting), fade, shake, clash }.
+ * `open`: how far each stretch of open time is marked (0–1). `scan`: the hour a line across the day is at.
+ */
+function planner({ view = 1, pop = 1, drop = [1, 1, 1, 1], gym = null, open = [0, 0], glow = 0, scan = null }) {
+  const pph = lerp(88, 64, view), h0 = lerp(14.55, 9, view), Y = (h) => 510 + (h - h0) * pph, f = lerp(40, 34, view), bottom = lerp(1216, 1440, view); // the whole day needs a taller card
+  const block = (from, to, fill, name, { x0 = 216, small = span(from, to), attrs = "" } = {}) => {
+    const y = Y(from) + 3, h = (to - from) * pph - 6, size = Math.min(f, h * 0.8), row = Math.min(h, pph - 6);
+    return `<g ${attrs}><rect x="${n(x0)}" y="${n(y)}" width="${n(960 - x0)}" height="${n(h)}" rx="${n(Math.min(18, h / 2.6))}" fill="${fill}"/>
+      <text x="${n(x0 + 22)}" y="${n(y + row / 2 + size * 0.35)}" font-size="${n(size)}" font-weight="800" fill="#fff" style="text-anchor:start">${name}</text>
+      <text x="940" y="${n(y + row / 2 + size * 0.3)}" font-size="${n(size * 0.8)}" font-weight="700" fill="rgba(255,255,255,.94)" style="text-anchor:end">${small}</text></g>`;
+  };
+  const hours = Array.from({ length: 15 }, (_, i) => 9 + i).filter((h) => Y(h) > 470 && Y(h) < bottom + 14)
+    .map((h) => `<line x1="206" y1="${n(Y(h))}" x2="972" y2="${n(Y(h))}" stroke="rgba(21,23,28,.12)" stroke-width="4"/><text x="192" y="${n(Y(h) + lerp(10, 8, view))}" font-size="${n(lerp(27, 24, view))}" font-weight="700" fill="rgba(21,23,28,.5)" style="text-anchor:end">${hh(h)}</text>`).join("");
+  const gaps = OPEN.map(([from, to], i) => (open[i] <= 0.01 ? "" : `<rect x="220" y="${n(Y(from) + 6)}" width="736" height="${n((to - from) * pph - 12)}" rx="18" fill="rgba(255,210,63,${n((i ? 0.3 + 0.22 * glow : 0.22) * clamp01(open[i]))})" stroke="rgba(21,23,28,${n(0.55 * clamp01(open[i]))})" stroke-width="5" stroke-dasharray="16 13" transform="translate(588 ${n(Y((from + to) / 2))}) scale(${n(lerp(0.94, 1, open[i]))}) translate(-588 ${n(-Y((from + to) / 2))})"/>`)).join("");
+  const events = EVENTS.map(([name, from, to, fill], i) => (drop[i] <= 0.005 ? "" : block(from, to, fill, name, { attrs: `transform="translate(0 ${n(-(1 - drop[i]) * (Y(to) - 440))})"` }))).join("");
+  let gymBlock = "";
+  if (gym) {
+    const x0 = lerp(216, 664, gym.squeeze ?? 1), cx = (x0 + 960) / 2, cy = Y(18.5);
+    gymBlock = block(GYM[0], GYM[1], C.gym, "Gym", { x0, small: (gym.squeeze ?? 1) > 0.5 ? hh(GYM[0]) : span(GYM[0], GYM[1]),
+      attrs: `opacity="${n(lerp(1, 0.5, gym.fade ?? 0) * clamp01((gym.pop ?? 1) * 3))}" transform="translate(${n(cx + (gym.shake ?? 0))} ${n(cy)}) scale(${n(gym.pop ?? 1)}) translate(${n(-cx)} ${n(-cy)})"` });
+    if ((gym.clash ?? 0) > 0.01) gymBlock += `<g transform="translate(${n(x0 - lerp(50, 42, view))} ${n(Y(18.5))}) scale(${n(gym.clash)})"><circle r="${n(lerp(38, 30, view))}" fill="${C.red}" stroke="#fff" stroke-width="5"/><text x="0" y="${n(lerp(18, 14, view))}" font-size="${n(lerp(52, 40, view))}" font-weight="800" fill="#fff">!</text></g>`;
+  }
+  const line = scan == null ? "" : `<line x1="206" y1="${n(Y(scan))}" x2="972" y2="${n(Y(scan))}" stroke="${C.ink}" stroke-width="7" stroke-linecap="round"/><circle cx="206" cy="${n(Y(scan))}" r="13" fill="${C.ink}"/>`;
+  return `<g transform="translate(540 820) scale(${n(pop)}) translate(-540 -820)">
+    <rect x="102" y="434" width="900" height="${n(bottom - 420)}" rx="34" fill="rgba(21,23,28,.13)"/><rect x="90" y="420" width="900" height="${n(bottom - 420)}" rx="34" fill="#fff"/>
+    <clipPath id="day"><rect x="90" y="440" width="900" height="${n(bottom - 440)}" rx="34"/></clipPath>
+    <g clip-path="url(#day)">${hours}${gaps}${events}${gymBlock}${line}</g>
+    <path d="M 90 494 V 454 a 34 34 0 0 1 34 -34 H 956 a 34 34 0 0 1 34 34 V 494 Z" fill="${C.sun}"/>
+    <text x="128" y="469" font-size="32" font-weight="800" fill="${C.ink}" style="text-anchor:start">THU 8 OCT</text>
+    <text x="952" y="468" font-size="27" font-weight="700" fill="rgba(21,23,28,.6)" style="text-anchor:end">Nina’s day</text>
+  </g>`;
+}
+
+// ---------- Scenes (u is seconds since the scene began) ----------
+/** 18:00. Her phone, face up on the meeting table, says it is time for the gym. `d` is how long the scene lasts. */
+function sceneRing(u, d) {
+  const phase = (u + 0.12) % 0.9, buzz = phase < 0.52 ? clamp01(5 * Math.sin((Math.PI * phase) / 0.52)) : 0;
+  const zoom = lerp(1, 1.06, prog(u, 0, d, linear)), reach = spring(u, d - 0.9, 0.5, 0.78);
+  const hx = lerp(1330, 842, reach), hy = lerp(1960, 1530, reach);
+  return `<g transform="translate(540 1150) scale(${n(zoom)}) translate(-540 -1150)">
+    <rect x="-60" y="440" width="1200" height="1600" rx="80" fill="${C.wood}"/>
+    <rect x="-60" y="440" width="1200" height="26" rx="13" fill="${C.woodDark}"/>
+    <g transform="translate(205 720) rotate(-9)"><rect x="-150" y="-190" width="300" height="380" rx="18" fill="#fff"/><rect x="-150" y="-190" width="46" height="380" rx="18" fill="${C.slate}"/>
+      ${[0, 1, 2, 3, 4].map((i) => `<rect x="-76" y="${-130 + i * 58}" width="${i === 4 ? 110 : 190}" height="12" rx="6" fill="rgba(21,23,28,.16)"/>`).join("")}</g>
+    <g transform="translate(905 690)"><circle r="126" fill="#fff"/><circle r="126" fill="none" stroke="rgba(21,23,28,.1)" stroke-width="8"/><circle r="84" fill="#fff" stroke="${C.ink}" stroke-width="12"/><circle r="66" fill="#7A4A2A"/><rect x="74" y="-18" width="62" height="36" rx="18" fill="none" stroke="${C.ink}" stroke-width="12"/></g>
+    <g transform="translate(130 1560) rotate(28)"><rect x="-16" y="-170" width="32" height="340" rx="16" fill="${C.ink}"/><rect x="-16" y="-170" width="32" height="70" rx="16" fill="${C.top}"/></g>
+    ${lockPhone({ x: 540 + 7 * Math.sin(u * 78) * buzz, y: 1180, rot: 1.7 * Math.sin(u * 78 + 1) * buzz, banner: spring(u, -0.3, 0.42, 0.72), buzz })}
+    <line x1="${n(hx + 60)}" y1="${n(hy + 50)}" x2="${n(hx + 520)}" y2="${n(hy + 470)}" stroke="${C.top}" stroke-width="124" stroke-linecap="round"/><circle cx="${n(hx)}" cy="${n(hy)}" r="70" fill="${C.skin}"/>
+  </g>`;
+}
+/** Still in the meeting: she peeks at her phone. `a` is when the next line (the reminder was on time) starts. */
+function sceneMeet(u, a) {
+  const peek = spring(u, 0.12, 0.45, 0.7), push = prog(u, a - 0.2, 0.55), right = spring(u, a + 0.4, 0.34, 0.5);
+  const talk = 0.5 + 0.5 * Math.sin(u * 13), bars = [0.55, 0.8, 0.45, 0.95, 0.7];
+  const words = (i) => { const q = clamp01((u - 0.15 - i * 0.16) / 0.3); return `<rect x="${92}" y="${968 + i * 34}" width="${n(lerp(0, [250, 196, 228][i], q))}" height="14" rx="7" fill="rgba(21,23,28,.28)"/>`; };
+  return `<g transform="translate(660 1160) scale(${n(lerp(1, 1.15, push))}) translate(-660 -1160)">
+    <rect x="70" y="486" width="690" height="400" rx="24" fill="#fff" stroke="${C.ink}" stroke-width="14"/>
+    <path d="M 77 560 V 517 a 24 24 0 0 1 24 -24 H 729 a 24 24 0 0 1 24 24 V 560 Z" fill="${C.purple}"/>
+    <text x="104" y="539" font-size="31" font-weight="800" fill="#fff" style="text-anchor:start">Team meeting · ${span(16.5, 19)}</text>
+    ${bars.map((b, i) => { const h = 230 * b * (0.9 + 0.1 * Math.sin(u * 2.2 + i)); return `<rect x="${140 + i * 116}" y="${n(852 - h)}" width="70" height="${n(h)}" rx="12" fill="${i === 3 ? C.purple : C.slate}"/>`; }).join("")}
+    ${clock({ x: 912, y: 640, r: 96, minutes: 18 * 60 })}
+    <text x="912" y="800" font-size="40" font-weight="800" fill="${C.ink}">18:00</text>
+    ${tick(986, 572, 46, right)}
+    <path d="M 100 1090 L 76 1140 L 150 1090 Z" fill="#fff"/><rect x="56" y="936" width="330" height="156" rx="40" fill="#fff"/>${words(0)}${words(1)}${words(2)}
+    ${person({ x: 96, y: 2050, k: 0.95, look: OMAR, legs: false, talk, brow: 0.3, head: 3 * Math.sin(u * 4), gaze: [6, 0], L: [-150, -290], R: [lerp(150, 210, 0.5 + 0.5 * Math.sin(u * 5)), -560] })}
+    ${person({ x: 984, y: 2050, k: 0.95, look: ANNA, legs: false, mouth: 0.3, head: -4, gaze: [-8, -2], shut: blink(u, 1.5) })}
+    ${person({ x: 540, y: 2110, k: 1.12, legs: false, phone: "R", screen: smallBanner, brow: lerp(0.1, -0.75, peek), mouth: lerp(0.2, -0.55, peek), gaze: [9 * peek, 7 * peek], head: 6 * peek, shut: blink(u, 0.95) + blink(u, a + 1.2),
+      R: [lerp(150, 196, peek), lerp(-210, -508, peek) - 5 * Math.sin(u * 3.2) * peek] })}
+    <rect x="-200" y="1660" width="1500" height="400" fill="${C.wood}"/><rect x="-200" y="1660" width="1500" height="24" fill="${C.woodDark}"/>
+  </g>`;
+}
+/**
+ * The clash at 18:00, then how it came about. `a` is when "She'd picked six…" starts (the day
+ * empties and the Gym goes in on its own), `b` when "then filled the same hour with work" does
+ * (the whole day comes into view and the four events come down).
+ */
+function scenePlan(u, a, b) {
+  const lift = (i) => 1 - prog(u, a - 0.34 + i * 0.03, 0.26, inn);
+  const delays = [0.34, 0.56, 0.84, 1.16];
+  const drop = EVENTS.map((e, i) => (u < b ? lift(i) : spring(u, b + delays[i], 0.42, 0.62)));
+  const alone = prog(u, a - 0.3, 0.3) * (1 - spring(u, b + delays[2] + 0.06, 0.34, 0.6));   // the Gym with the hour to itself
+  const again = spring(u, b + delays[2] + 0.14, 0.34, 0.5);
+  const clash = u < a ? spring(u, 0.12, 0.34, 0.5) * (1 - prog(u, a - 0.36, 0.14)) : again;
+  const happy = prog(u, a - 0.1, 0.3) * (1 - prog(u, b + delays[2], 0.5));
+  return `${planner({ view: prog(u, b - 0.12, 0.55), pop: spring(u, -0.12, 0.4, 0.8), drop,
+      gym: { squeeze: 1 - alone, pop: 1 + 0.1 * kick(u, a + 0.05, 0.34, 0.4), fade: u < a ? prog(u, 0.5, 0.4) * (1 - prog(u, a - 0.3, 0.2)) : prog(u, b + 1.5, 0.5),
+        shake: u < a ? 7 * Math.sin(u * 44) * (1 - prog(u, 0.15, 0.7, linear)) : 6 * kick(u, b + delays[2] + 0.1, 0.3, 0.3), clash } })}
+    ${bust(prog(u, b - 0.12, 0.55), { brow: lerp(-0.9, 0.7, happy), mouth: lerp(-0.8, 0.8, happy), gaze: [0, -8], head: 4 * kick(u, 0.15, 0.4, 0.4) - 3 * happy + 5 * kick(u, b + delays[2] + 0.1, 0.4, 0.4), shut: blink(u, 0.9) + blink(u, a + 1.3) + blink(u, b + 2),
+      R: [lerp(150, 214, happy), lerp(-290, -752 - 12 * Math.sin(u * 10), happy)] })}`;
+}
+/** That evening at home: the bag by the door, and "tomorrow". `a` is when "felt easier…" starts. */
+function sceneEvening(u, a) {
+  const think = spring(u, 0.3, 0.4, 0.6), shrug = spring(u, a + 0.05, 0.45, 0.6) * (1 - prog(u, a + 1.25, 0.45)), slump = prog(u, a + 1.2, 0.9);
+  const dot = (x, y, r, delay) => `<circle cx="${x}" cy="${y}" r="${n(r * spring(u, 0.12 + delay, 0.3, 0.6))}" fill="#fff"/>`;
+  return `${floor(1832)}
+    ${windowPane({ x: 96, y: 470, w: 330, h: 380, late: lerp(0.78, 1, prog(u, 0, 2.2)) })}
+    ${clock({ x: 890, y: 610, r: 104, minutes: 20 * 60, pop: spring(u, 0.05, 0.4, 0.6) })}
+    <text x="890" y="772" font-size="38" font-weight="800" fill="${C.ink}">20:00</text>
+    ${bag({ x: 830, y: 1826, k: 0.62, sy: lerp(1, 0.86, slump), sx: lerp(1, 1.04, slump), rot: -3 * slump })}
+    ${dot(500, 1040, 15, 0)}${dot(545, 990, 22, 0.08)}
+    <g transform="translate(700 930) scale(${n(think)}) rotate(${n(-3 + 2 * Math.sin(u * 2.4))})"><rect x="-190" y="-74" width="380" height="148" rx="74" fill="#fff"/><text x="0" y="18" font-size="54" font-weight="800" fill="${C.ink}">tomorrow</text></g>
+    ${person({ x: 380, y: 1830, k: 0.82, phone: "R", screen: smallBanner, lean: 5 * slump, head: lerp(lerp(7, -5, shrug), 12, slump), brow: lerp(lerp(-0.3, 0.3, shrug), -0.9, slump), mouth: lerp(lerp(-0.3, 0.1, shrug), -0.8, slump), gaze: [lerp(8, 0, shrug), lerp(5, 6, slump)], shut: blink(u, 1.2) + blink(u, a + 0.9),
+      L: [lerp(-150, -252, shrug), lerp(-290, -456, shrug) + 12 * slump], R: [lerp(lerp(190, 256, shrug), 160, slump), lerp(lerp(-520, -456, shrug), -300, slump)] })}`;
+}
+/** What if she looked first? A line runs down the day and the open stretches show. */
+function sceneScan(u) {
+  const run = 1.7, reached = (h) => 0.3 + run * inverse((h - 9) / 14);
+  const at = lerp(9, 23, prog(u, 0.3, run)), wonder = prog(u, reached(20) - 0.1, 0.4);
+  return `${planner({ view: 1, pop: spring(u, -0.1, 0.4, 0.8), gym: { squeeze: 1, fade: 0.55 }, open: OPEN.map(([from]) => spring(u, reached(from) + 0.05, 0.4, 0.6)),
+      glow: 0.5 + 0.5 * Math.sin((u - reached(20)) * 6) * wonder, scan: u > 0.2 && u < 0.3 + run + 0.25 ? at : null })}
+    ${bust(1, { brow: lerp(0.2, 0.9, wonder), mouth: lerp(-0.1, 0.5, wonder), gaze: [0, lerp(-9, -5, prog(u, 0.3, run))], head: lerp(-4, 4, prog(u, 0.3, run)), shut: blink(u, 1.25),
+      R: [lerp(150, 78, spring(u, 0.5, 0.5, 0.75)), lerp(-290, -664, spring(u, 0.5, 0.5, 0.75))] })}`;
+}
+/** The idea, as the Habitnex mark draws it: two events, and a habit fitted between them. */
+function sceneIdea(u) {
+  const S = 300 / 48, tile = spring(u, 0, 0.42, 0.68), a = prog(u, 0.14, 0.28, out), b = prog(u, 0.24, 0.28, out), fit = spring(u, 0.5, 0.36, 0.5), word = prog(u, 0.3, 0.35, out);
+  const lift = spring(u, 0.2, 0.5, 0.72);
+  return `${floor(1832)}
+    <g transform="translate(540 650) scale(${n(tile)})"><rect x="-150" y="-150" width="300" height="300" rx="68" fill="#000"/>
+      <rect x="${n(-150 + 9 * S - 120 * (1 - a))}" y="${n(-150 + 9 * S)}" width="${n(22 * S)}" height="${n(7 * S)}" rx="${n(2.5 * S)}" fill="#48484A" opacity="${n(a)}"/>
+      <rect x="${n(-150 + 9 * S - 120 * (1 - b))}" y="${n(-150 + 32 * S)}" width="${n(22 * S)}" height="${n(7 * S)}" rx="${n(2.5 * S)}" fill="#48484A" opacity="${n(b)}"/>
+      <rect x="${n(-150 + 17 * S + 190 * (1 - fit))}" y="${n(-150 + 19 * S)}" width="${n(22 * S)}" height="${n(10 * S)}" rx="${n(2.5 * S)}" fill="#fff" opacity="${n(clamp01(fit * 4))}"/></g>
+    <text x="540" y="${n(932 + 24 * (1 - word))}" font-size="132" font-weight="800" fill="${C.ink}" opacity="${n(word)}" style="font-family:Onest, sans-serif;letter-spacing:-0.05em">habitnex</text>
+    ${person({ x: 540, y: 1830, k: 0.8, phone: "R", brow: 0.6, mouth: 0.5, gaze: [7 * lift, -4 * lift], head: 5 * lift, shut: blink(u, 1.3), R: [lerp(150, 176, lift), lerp(-290, -560, lift)] })}`;
+}
+/** Back with her, beside the day laid out as a board. `g` is how far she has moved toward the end card's pose. */
+function sceneBeside(u, g = 0) {
+  const arrive = spring(u, 0.15, 0.5, 0.72), wave = Math.sin(u * 8.5) * g;
+  return person({ x: lerp(lerp(1320, 800, arrive), 540, g), y: lerp(1872, 1856, g), k: lerp(0.64, 0.74, g), head: lerp(-7, 3 * wave, g), brow: 0.5, mouth: lerp(0.45, 0.65, g), gaze: [lerp(-9, 0, g), lerp(-3, 0, g)], shut: blink(u, 1.7) + blink(u, 3.9),
+    L: [lerp(-250, -250 + 26 * wave, g), lerp(-700 - 14 * Math.sin(u * 3), -760 - 10 * wave, g)] });
+}
+
+/**
+ * The same Thursday as a tilted board (an illustration): the four events from the calendar, the
+ * Gym she had planned at 18:00, and the free window the coach named. A line runs down the day,
+ * each event rises as it passes, and it stops where the free time starts.
+ */
+const boardY = (h) => 74 + (h - 9) * 56; // 09:00 to 23:00
+function buildBoard() {
+  const hours = Array.from({ length: 15 }, (_, i) => `<div class="b-hour" style="top:${boardY(9 + i)}px">${hh(9 + i)}</div>`).join("");
+  const events = EVENTS.map(([name, from, to, color]) => `<div class="b-block ev${to - from > 2 ? " tall" : to - from < 1 ? " short" : ""}" style="top:${boardY(from) + 4}px;height:${(to - from) * 56 - 9}px;background:${color}"><span>${name}</span><small>${span(from, to)}</small></div>`).join("");
+  $("#board").innerHTML = `<div class="b-shadow"></div><div class="b-card"></div><div class="b-head">THU 8 OCT</div>${hours}
+    <div class="b-free quiet" style="top:${boardY(OPEN[0][0]) + 4}px;height:${(OPEN[0][1] - OPEN[0][0]) * 56 - 9}px"></div>
+    <div class="b-free named" style="top:${boardY(OPEN[1][0]) + 4}px;height:${(OPEN[1][1] - OPEN[1][0]) * 56 - 9}px">Free ${span(OPEN[1][0], OPEN[1][1])}</div>
+    ${events}
+    <div class="b-block gym" style="top:${boardY(GYM[0]) + 4}px;height:${(GYM[1] - GYM[0]) * 56 - 9}px;background:${C.gym};left:330px;width:288px"><span>Gym</span><small>${hh(GYM[0])}</small></div>
+    <div class="b-scan"></div>`;
+}
+function board(u, leave) {
+  const el = $("#board"), arrive = spring(u, 0, 0.7, 0.8), end = OPEN[1][0], when = (h) => 0.45 + 1.5 * inverse((h - 9) / (end - 9));
+  el.style.opacity = clamp01(arrive * 2.5) * (1 - leave);
+  el.style.transform = `translate3d(${n(-700 * leave)}px, ${n((1 - arrive) * 420)}px, 0) rotateX(${n(lerp(70, 44, arrive))}deg) rotateZ(${n(lerp(-40, -17, arrive) + 6 * prog(u, 0.7, 4.6, linear))}deg) scale(0.98)`;
+  const at = lerp(9, end, prog(u, 0.45, 1.5)); // where the line has got to in the day
+  const scan = el.querySelector(".b-scan");
+  scan.style.top = `${n(boardY(at) - 3)}px`;
+  scan.style.transform = "translateZ(42px)";
+  scan.style.opacity = prog(u, 0.35, 0.15) * (1 - prog(u, 2.3, 0.4));
+  el.querySelectorAll(".ev").forEach((block, i) => {
+    const up = spring(u, when(EVENTS[i][1]), 0.4, 0.55);
+    block.style.transform = `translateZ(${n(26 * up)}px)`;
+    block.style.opacity = lerp(0.35, 1, clamp01(up * 2));
+  });
+  const gymUp = spring(u, when(GYM[0]) + 0.1, 0.45, 0.45), gym = el.querySelector(".gym");
+  gym.style.transform = `translateZ(${n(40 * gymUp)}px) rotateZ(${n(5 * gymUp + 2 * Math.sin(u * 7) * gymUp)}deg)`; // lifted off the day: it has nowhere to sit at 18:00
+  gym.style.opacity = clamp01(gymUp * 2);
+  const quiet = el.querySelector(".quiet"), early = spring(u, when(OPEN[0][0]), 0.4, 0.6);
+  quiet.style.opacity = lerp(0.2, 1, clamp01(early * 1.5));
+  quiet.style.transform = `translateZ(${n(8 * early)}px)`;
+  const open = spring(u, 2.0, 0.5, 0.5), free = el.querySelector(".named");
+  free.style.opacity = lerp(0.25, 1, clamp01(open * 1.5));
+  free.style.transform = `translateZ(${n(34 * open + 8 * Math.sin((u - 2) * 4) * clamp01(open))}px) scale(${n(lerp(0.96, 1, open))})`;
+}
+/** The fraction of a line's run (0–1) at which it has covered fraction `x` of the distance, undoing its easing. */
+function inverse(x) { let lo = 0, hi = 1; for (let i = 0; i < 24; i += 1) { const mid = (lo + hi) / 2; if (inOut(mid) < x) lo = mid; else hi = mid; } return lo; }
+
+// ---------- Timetable ----------
+const SHOWN = 18; // caption lines; the last two lines are said over the end card
+let T, CAMERA, FOCUS;
+function plan(story) {
+  const p = story.p, ends = story.ends;
+  const end = p[18] - 0.3, urlClear = end + 0.55;
+  T = {
+    lead: story.lead, p, end, urlClear, lines: story.phrases,
+    meet: p[2] - 0.2, onTime: p[3] - 0.2, clash: p[4] - 0.18, picked: p[5] - 0.3, filled: p[6] - 0.12, evening: p[7] - 0.22, scan: p[9] - 0.22, idea: p[10] - 0.2,
+    toPhone: p[11] - 0.3,                        // the real Today screen: its header first
+    wider: p[12] - 0.12,                         // cut: the coach's card, then down the day
+    toChat: p[13] + 0.7, message: p[14] - 0.1, reply: p[15] - 0.25,   // her question, then the coach's actual answer
+    cal3d: p[16] - 0.4,                          // the same day as a board, and her beside it
+    duration: Math.ceil(Math.max(urlClear + 4.05, story.speechEnd + story.tail) * 10 - 1e-6) / 10,
+  };
+  T.captions = p.slice(0, SHOWN).map((at, i) => [i === 0 ? -1 : at - 0.05, i === SHOWN - 1 ? end - 0.22 : Math.min(p[i + 1] - 0.28, ends[i] + 0.75)]);
+  T.cuts = [T.meet, T.onTime, T.clash, T.picked, T.filled, T.evening, T.scan, T.idea, T.toPhone, T.wider, T.toChat, T.reply, T.cal3d, T.end];
+  T.s5 = T.evening + 0.1; T.s6 = T.scan; // for the music: the groove drops for the evening and returns with "What if"
+  $("#caps").innerHTML = story.phrases.slice(0, SHOWN).map((text) => `<div class="cap${text.length > 44 ? " long" : ""}">${text}</div>`).join("");
+  buildBoard();
+  // Camera on the captures. `fx`, `fy`: the point looked at (0–1); `cx`, `ty`: where it sits in the frame; `s`: zoom.
+  // The streak pill at the top right of Today holds an emoji this simulator can't draw, so every framing leaves it out.
+  CAMERA = [
+    { at: 0, fx: 0.34, fy: 0.12, cx: 540, ty: 1050, s: 2.0 },                                   // "Thu, 8 Oct · 4 events · 3h free"
+    { at: T.toPhone + 0.4, fx: 0.34, fy: 0.12, cx: 540, ty: 1050, s: 2.06, dur: Math.max(0.3, T.wider - T.toPhone - 0.45), ease: linear },
+    { at: T.wider, fx: 0.5, fy: 0.49, cx: 540, ty: 1167, s: 1.4, dur: 0.001 },                   // the week and the coach's card from her calendar
+    { at: T.wider + 0.3, fx: 0.5, fy: 0.6, cx: 540, ty: 1036, s: 1.32, dur: Math.max(0.9, T.toChat - T.wider - 0.75) },   // down her day, to the first event
+    { at: T.toChat, fx: 0.5, fy: 0.7, cx: 540, ty: 1000, s: 1.4, dur: 0.36 },                    // the Coach tab arrives framed on the question and the answer
+    { at: T.reply, fx: 0.5, fy: 0.725, cx: 540, ty: 1000, s: 1.46, dur: Math.max(1, T.cal3d - T.reply - 0.3), ease: linear },
+  ];
+  // Emphasis box: [left, top, right, bottom] of the capture (0–1) and how far the rest is dimmed.
+  const off = (at, dur = 0.12) => ({ at, box: null, dim: 0, dur });
+  FOCUS = [
+    { at: 0, box: [0.02, 0.075, 0.67, 0.156], dim: 0 },
+    { at: T.toPhone + 0.45, box: [0.02, 0.075, 0.67, 0.156], dim: 0.3, dur: 0.35 },   // the date, the events seen, the free hours
+    off(T.wider - 0.08, 0.06),
+    { at: T.wider + 0.95, box: [0.04, 0.518, 0.96, 0.9], dim: 0.26, dur: 0.4 },       // her day
+    off(T.toChat - 0.14),
+    { at: T.message, box: [0.2, 0.62, 0.975, 0.68], dim: 0.3, dur: 0.35 },            // what was asked
+    { at: T.reply, box: [0.03, 0.685, 0.8, 0.815], dim: 0.36, dur: 0.4 },             // what the coach answered
+    off(T.cal3d - 0.3, 0.2),
+  ];
+}
+
+function seek(t) {
+  // The illustrated scenes
+  const art = $("#art");
+  const scenes = [[0, (u) => sceneRing(u, T.meet)], [T.meet, (u) => sceneMeet(u, T.p[3] - T.meet)], [T.clash, (u) => scenePlan(u, T.p[5] - T.clash, T.p[6] - T.clash)],
+    [T.evening, (u) => sceneEvening(u, T.p[8] - T.evening)], [T.scan, sceneScan], [T.idea, sceneIdea]];
+  if (t >= T.cal3d - 0.05) { art.innerHTML = sceneBeside(t - T.cal3d + 0.05, spring(t, T.end - 0.1, 0.55, 0.8)); art.style.opacity = 1; }
+  else if (t < T.toPhone + 0.24) {
+    const [start, draw] = [...scenes].reverse().find(([at]) => t >= at);
+    art.innerHTML = draw(t - start);
+    art.style.opacity = 1 - prog(t, T.toPhone - 0.1, 0.2); // gone before the real screen is solid, so nothing shows through it
+  } else { art.innerHTML = ""; art.style.opacity = 0; }
+
+  // The day as a board
+  const cal = $("#cal3d");
+  cal.style.display = t < T.cal3d - 0.05 || t > T.end + 0.4 ? "none" : "";
+  if (t >= T.cal3d - 0.05) board(t - T.cal3d, prog(t, T.end - 0.3, 0.35, inn));
+
+  // The real captures
+  let c = { ...CAMERA[0] };
+  for (const key of CAMERA.slice(1)) {
+    if (t <= key.at) break;
+    const q = prog(t, key.at, key.dur, key.ease ?? inOut);
+    for (const k of ["fx", "fy", "cx", "ty", "s"]) c[k] = lerp(c[k], key[k], q);
+  }
+  // The real screen arrives already framed, easing in from slightly closer, and leaves to the left.
+  const grow = prog(t, T.toPhone, 0.4, out), leaving = prog(t, T.cal3d - 0.1, 0.3, inn);
+  const s = c.s * lerp(1.12, 1, grow);
+  const phone = $("#phone");
+  phone.style.display = t < T.toPhone || leaving >= 1 ? "none" : "";
+  phone.style.transform = `translate(${n(c.cx - c.fx * 780 * s - 900 * leaving)}px, ${n(c.ty - c.fy * 1696 * s)}px) scale(${n(s)})`;
+  phone.style.opacity = grow * (1 - leaving);
+  $("#shade").style.opacity = t < T.toPhone ? 0 : 1 - prog(t, T.cal3d - 0.1, 0.3);
+  const push = prog(t, T.toChat, 0.34); // Today → Coach: a sideways push inside the phone
+  $("#s-today").style.transform = `translateX(${-780 * push}px)`;
+  $("#s-chat").style.transform = `translateX(${780 * (1 - push)}px)`;
+  let f = { box: [...FOCUS[0].box], dim: FOCUS[0].dim };
+  for (const key of FOCUS.slice(1)) {
+    if (t <= key.at) break;
+    const q = prog(t, key.at, key.dur), box = key.box ?? f.box;
+    f = { box: f.dim < 0.01 ? [...box] : f.box.map((v, i) => lerp(v, box[i], q)), dim: lerp(f.dim, key.dim, q) };
+  }
+  Object.assign($("#focus").style, { left: f.box[0] * 780 + "px", top: f.box[1] * 1696 + "px", width: (f.box[2] - f.box[0]) * 780 + "px", height: (f.box[3] - f.box[1]) * 1696 + "px", boxShadow: `0 0 0 4000px rgba(0, 0, 0, ${f.dim.toFixed(3)})` });
+
+  // Captions. The first is on screen from the first frame.
+  document.querySelectorAll(".cap").forEach((cap, i) => {
+    const [from, to] = T.captions[i];
+    const enter = i === 0 ? 1 : prog(t, from, 0.24, out), exit = prog(t, to, 0.18);
+    cap.style.opacity = enter * (1 - exit);
+    cap.style.transform = i === 0 ? `scale(${n(lerp(1.08, 1, prog(t, 0, 0.6, out)))}) translateY(${-exit * 14}px)` : `translateY(${n((1 - enter) * 22 - exit * 14)}px)`;
+  });
+
+  // End card
+  const end = $("#end");
+  end.style.display = t < T.end - 0.02 ? "none" : "";
+  [["#lockup", 0, 0.3], ["#dev", 0.08, 0.3], ["#join", 0.14, 0.35], ["#site", 0.2, 0.35]].forEach(([id, delay, dur]) => {
+    const e = prog(t, T.end + delay, dur, out);
+    $(id).style.opacity = e;
+    $(id).style.transform = `translateY(${(1 - e) * 24}px)`;
+  });
+}
+
+const U = 132 / 48; // the Slot tile: a 48 × 48 unit grid (brand/README.md), dark version
+[[9, 9, 22, 7, "#48484A"], [17, 19, 22, 10, "#fff"], [9, 32, 22, 7, "#48484A"]].forEach(([x, y, w, h, color], i) => {
+  Object.assign(document.querySelectorAll("#tile div")[i].style, { left: x * U + "px", top: y * U + "px", width: w * U + "px", height: h * U + "px", borderRadius: 2.5 * U + "px", background: color });
+});
+const timing = new URLSearchParams(location.search).get("timing") ?? "story3"; // which take's timing to follow
+Promise.all([fetch(`out/${timing}.json`).then((r) => r.json()).then(plan), document.fonts.load('800 100px "Onest"', "habitnex"), ...[...document.images].map((img) => img.decode())]).then(() => {
+  window.TIMES = T;
+  window.seek = seek;
+  seek(Number(new URLSearchParams(location.search).get("t") ?? 0));
+  window.READY = true;
+});
+</script>
+</body>
+</html>

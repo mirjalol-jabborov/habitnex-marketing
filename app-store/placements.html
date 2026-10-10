@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Habitnex · App Store header and search results</title>
+<!--
+  The two creative assets the App Store shows on iOS 27 and later (App Store Connect → Header and
+  Search Results):
+    header          3840 × 1646 (21:9)  the top of the product page
+    search-results  3840 × 2560 (3:2)   the app's card in Search, in place of the screenshots
+  The App Store crops both differently from device to device. What must always be seen (the
+  words) stays inside Apple's "Art Safe Area", read from Apple's own templates:
+    header          x 1097–2743, y 493–1154   (1646 × 661, in the middle)
+    search-results  x 836–3004,  y 765–1795   (2168 × 1030, in the middle)
+  Everything outside it is real pieces of the app that may be cut off. Add ?guides=1 to see the
+  safe areas. The pictures are the same captures the screenshots use (captures/<lang>/), and
+  tools/render.mjs turns each .asset into out/<lang>/<id>.png.
+-->
+<link id="pieces" rel="stylesheet" href="captures/en/pieces.css">
+<style>
+  @font-face { font-family: "Onest"; font-weight: 800; src: url("fonts/onest-latin-800.woff2") format("woff2"); unicode-range: U+0000-02FF, U+2000-206F, U+20AC, U+2122; }
+  @font-face { font-family: "Onest"; font-weight: 800; src: url("fonts/onest-cyrillic-800.woff2") format("woff2"); unicode-range: U+0400-04FF; }
+
+  :root { --ink: #0a0a0a; --paper: #ffffff; --soft: #f2f2f7; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 40px; display: flex; flex-direction: column; gap: 40px; width: max-content; background: #3a3a3c; }
+
+  .asset { position: relative; flex: none; width: 3840px; overflow: hidden; font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif; }
+  .asset.dark { background: var(--ink); color: var(--paper); --mute: #98989d; }
+  .asset.light { background: var(--soft); color: var(--ink); --mute: #8e8e93; }
+  #header { height: 1646px; }
+  #search-results { height: 2560px; }
+
+  /* The words, held inside the safe area and centred in it. */
+  .safe { position: absolute; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  #header .safe { left: 1097px; top: 493px; width: 1646px; height: 661px; }
+  #search-results .safe { left: 836px; top: 765px; width: 2168px; height: 1030px; }
+  .title { margin: 0; font-family: "Onest", sans-serif; font-weight: 800; line-height: 0.98; letter-spacing: -0.05em; white-space: pre; }
+  .sub { margin: 0; font-family: "Onest", sans-serif; font-weight: 800; line-height: 1.07; letter-spacing: -0.04em; color: var(--mute); white-space: pre; }
+  #header .title { font-size: 258px; }
+  #header .sub { margin-top: 40px; font-size: 80px; }
+  #search-results .title { font-size: 196px; }
+  html[lang="ja"] .title, html[lang="ja"] .sub { font-family: "Onest", "Hiragino Sans", sans-serif; letter-spacing: -0.03em; line-height: 1.14; }
+  html[lang="ja"] #header .title { font-size: 226px; }
+  html[lang="ja"] #header .sub { font-size: 72px; }
+  html[lang="ja"] #search-results .title { font-size: 172px; }
+  .guides .safe { outline: 6px dashed #ff3b30; }
+
+  /* An iPhone drawn in CSS around a capture, and one piece of a capture lifted out: as in frames.html. */
+  .phone { position: absolute; width: calc(var(--w) * 1px); padding: calc(var(--w) * 0.024px); border-radius: calc(var(--w) * 0.17px); background: #0a0a0a;
+           box-shadow: inset 0 0 0 calc(var(--w) * 0.0055px) #55555a, inset 0 0 0 calc(var(--w) * 0.011px) #1c1c1e, 0 70px 160px rgba(0, 0, 0, 0.38), 0 10px 30px rgba(0, 0, 0, 0.2); }
+  .screen { position: relative; overflow: hidden; width: 100%; aspect-ratio: 1320 / 2868; border-radius: calc(var(--w) * 0.146px); background: var(--soft); }
+  .raw { position: absolute; left: 0; top: 0; width: 1320px; height: 2868px; transform-origin: 0 0; transform: scale(calc(var(--w) * 0.952 / 1320)); }
+  .raw img { display: block; width: 1320px; height: 2868px; }
+  .emoji { position: absolute; display: grid; place-items: center; font-family: "Apple Color Emoji"; line-height: 1; }
+  .lift { position: absolute; overflow: hidden; width: calc(var(--cw) * var(--s) * 1px); height: calc(var(--ch) * var(--s) * 1px); border-radius: calc(var(--r, 66) * var(--s) * 1px);
+          box-shadow: 0 60px 130px rgba(0, 0, 0, 0.3), 0 10px 28px rgba(0, 0, 0, 0.14); }
+  .lift img { position: absolute; width: calc(1320 * var(--s) * 1px); left: calc(var(--x) * var(--s) * -1px); top: calc(var(--y) * var(--s) * -1px); }
+  .dark .lift { box-shadow: 0 60px 130px rgba(0, 0, 0, 0.6); }
+</style>
+</head>
+<body>
+
+<!-- The product page header: the promise in the middle; around it, the phone and three pieces of the app. -->
+<section class="asset dark" id="header">
+  <div class="safe">
+    <h1 class="title" data-t="h.title">Habits that
+actually stick.</h1>
+    <p class="sub" data-t="h.sub">The AI coach that knows your calendar.</p>
+  </div>
+  <!-- Left: a voice of the AI coach, the change it suggested in chat, and a year of one habit. -->
+  <div class="lift voice-3" style="--s: 0.86; --r: 44; left: 30px; top: 150px; transform: rotate(-4deg);"><img src="captures/en/voice-dark.png" alt=""></div>
+  <div class="lift chat-change" style="--s: 0.98; --r: 58; left: 150px; top: 520px; transform: rotate(3deg);"><img src="captures/en/coach.png" alt=""></div>
+  <div class="lift year-days" style="--s: 0.82; --r: 62; left: -40px; top: 1150px; transform: rotate(-3deg);"><img src="captures/en/year.png" alt=""></div>
+  <!-- Right: Today, with the AI coach's card from the calendar. -->
+  <div class="phone" style="--w: 1000; left: 2830px; top: 170px; transform: rotate(7deg);">
+    <div class="screen"><div class="raw">
+      <img src="captures/en/today.png" alt="">
+      <span class="emoji" style="left: 1003px; top: 271px; width: 60px; height: 60px; background: #fff; font-size: 42px;">🔥</span>
+      <span class="emoji hourglass" style="width: 50px; height: 50px; background: #0a0a0a; font-size: 34px;">⏳</span>
+    </div></div>
+  </div>
+</section>
+
+<!-- Search results: what the app is, and the one thing only it does: the AI coach's card from the calendar. -->
+<section class="asset light" id="search-results">
+  <div class="safe" style="justify-content: flex-start;">
+    <h1 class="title" data-t="s.title">The AI habit coach
+that knows your calendar.</h1>
+  </div>
+  <div class="lift today-card" style="--s: 1.24; --r: 62; left: 1162px; top: 1196px; z-index: 6; transform: rotate(-2deg);"><img src="captures/en/today.png" alt=""></div>
+  <!-- Either side, and free to be cut off: a habit's page with its numbers, and a chat with the AI coach. -->
+  <div class="phone" style="--w: 1040; left: -190px; top: 330px; transform: rotate(-8deg);">
+    <div class="screen"><div class="raw"><img src="captures/en/gym.png" alt=""></div></div>
+  </div>
+  <div class="phone" style="--w: 1040; left: 2990px; top: 300px; transform: rotate(8deg);">
+    <div class="screen"><div class="raw"><img src="captures/en/coach.png" alt=""></div></div>
+  </div>
+</section>
+
+<script src="strings.js"></script>
+<script>
+  // Another language: placements.html?lang=ja, as in frames.html.
+  const query = new URLSearchParams(location.search), lang = query.get("lang") ?? "en";
+  document.documentElement.lang = lang;
+  if (query.has("guides")) document.body.classList.add("guides");
+  if (lang !== "en") {
+    document.getElementById("pieces").href = `captures/${lang}/pieces.css`;
+    for (const img of document.images) img.src = img.getAttribute("src").replace("captures/en/", `captures/${lang}/`);
+    for (const el of document.querySelectorAll("[data-t]")) { const words = (window.WORDS[lang] ?? {})[el.dataset.t]; if (words) el.textContent = words; }
+  }
+  // Words wider or taller than the safe area get smaller until they fit inside it.
+  document.fonts.ready.then(() => {
+    for (const safe of document.querySelectorAll(".safe")) {
+      const words = [...safe.children], sizes = words.map((el) => parseFloat(getComputedStyle(el).fontSize));
+      const over = () => words.some((el) => el.scrollWidth > safe.clientWidth) || words.reduce((sum, el) => sum + el.offsetHeight + parseFloat(getComputedStyle(el).marginTop), 0) > safe.clientHeight;
+      for (let k = 0.98; k > 0.5 && over(); k -= 0.02) words.forEach((el, i) => { el.style.fontSize = sizes[i] * k + "px"; });
+    }
+    document.documentElement.dataset.ready = "yes";
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Habitnex story draft 01</title>
+<style>
+  @font-face { font-family: "Onest"; font-weight: 800; src: url("../product-video/assets/onest-latin-800-normal.woff2") format("woff2"); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #FBF2C4; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #15171C; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #FBF2C4; }
+  #art { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  #art text { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; text-anchor: middle; }
+  /* The real app captures, inside a plain bezel. */
+  #phone { position: absolute; left: 0; top: 0; width: 780px; height: 1696px; transform-origin: 0 0; }
+  #bezel { position: absolute; inset: -12px; border-radius: 132px; background: #060607; box-shadow: 0 0 0 2px #4a4a4e, 0 0 0 5px #1b1b1d; }
+  #shots { position: absolute; inset: 0; border-radius: 120px; overflow: hidden; background: #f2f2f7; }
+  #shots img { position: absolute; left: 0; top: 0; width: 780px; height: 1696px; display: block; }
+  #focus { position: absolute; border-radius: 30px; pointer-events: none; } /* emphasis drawn by the film, not the app */
+  #shade { position: absolute; left: 0; top: 0; width: 1080px; height: 430px; background: linear-gradient(to bottom, #FBF2C4 74%, rgba(251, 242, 196, 0)); }
+  .cap { position: absolute; left: 60px; width: 960px; top: 112px; height: 240px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 70px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; }
+  .cap.big { font-size: 88px; }
+  #label { position: absolute; left: 0; width: 1080px; top: 52px; text-align: center; font-size: 28px; font-weight: 600; letter-spacing: 0.01em; color: rgba(21, 23, 28, 0.62); }
+  #end { position: absolute; left: 0; top: 400px; width: 1080px; display: flex; flex-direction: column; align-items: center; }
+  #lockup { display: flex; align-items: center; gap: 28px; }
+  #tile { position: relative; width: 132px; height: 132px; border-radius: 30px; background: #000; }
+  #tile div { position: absolute; }
+  #word { font-family: "Onest", sans-serif; font-weight: 800; font-size: 122px; letter-spacing: -0.05em; line-height: 1; padding-bottom: 12px; }
+  #join { font-size: 78px; font-weight: 800; letter-spacing: -0.02em; margin-top: 84px; }
+  #site { font-size: 92px; font-weight: 800; letter-spacing: -0.02em; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="art" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div id="phone">
+    <div id="bezel"></div>
+    <div id="shots">
+      <img id="s-chat" src="../review-video-01/captures/coach-chat.png">
+      <img id="s-preview" src="../review-video-01/captures/move-gym-preview.png">
+      <div id="focus"></div>
+    </div>
+  </div>
+  <div id="shade"></div>
+  <div class="cap big">He cancelled on himself.</div>
+  <div class="cap big">Again.</div>
+  <div class="cap">His gym bag was packed,</div>
+  <div class="cap">but one meeting ran late.</div>
+  <div class="cap">So he tried Habitnex</div>
+  <div class="cap">and asked the coach for a different time.</div>
+  <div class="cap">He could check the suggestion</div>
+  <div class="cap">before changing his plan.</div>
+  <div id="end">
+    <div id="lockup"><div id="tile"><div></div><div></div><div></div></div><div id="word">habitnex</div></div>
+    <div id="join">Join the waitlist</div>
+    <div id="site">habitnex.io</div>
+  </div>
+  <div id="label">Illustrative story · App demo</div>
+</div>
+<script>
+// Story draft 01. An illustrated office worker (drawn here from simple shapes) leads into the
+// real app captures. Every frame is a function of time: seek(t) draws second t. The timing
+// follows the narration (out/story.json, from timing.mjs).
+const clamp01 = (x) => Math.max(0, Math.min(1, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const inOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const inn = (x) => x * x * x;
+const linear = (x) => x;
+const prog = (t, start, dur, ease = inOut) => ease(clamp01((t - start) / dur));
+function spring(t, start, response = 0.5, damping = 0.7) {
+  const x = t - start;
+  if (x <= 0) return 0;
+  const w0 = (2 * Math.PI) / response, wd = w0 * Math.sqrt(1 - damping * damping);
+  return 1 - Math.exp(-damping * w0 * x) * (Math.cos(wd * x) + ((damping * w0) / wd) * Math.sin(wd * x));
+}
+const kick = (t, at, response = 0.35, damping = 0.45) => (t >= at ? 1 - spring(t, at, response, damping) : 0);
+const blink = (u, at) => clamp01(1 - Math.abs(u - at) / 0.09);
+const $ = (s) => document.querySelector(s);
+const n = (x) => Number(x.toFixed(2));
+
+const C = { ink: "#15171C", shirt: "#2F6FED", trousers: "#1E2330", skin: "#F0BE94", hair: "#2B2622", bag: "#F0643C", bagDark: "#C74A27", red: "#E5432E", desk: "#C7CCDB", deskDark: "#A6ADC2" };
+
+// ---------- The character: an office worker in a blue shirt and dark trousers ----------
+/** An arm from shoulder to hand, bending outward at the elbow. `extra` is drawn under the hand. */
+function arm(sx, sy, hx, hy, side, extra = "") {
+  const L = 178;
+  let dx = hx - sx, dy = hy - sy, d = Math.hypot(dx, dy);
+  const reach = Math.min(d, 2 * L - 2);
+  if (d > reach) { dx *= reach / d; dy *= reach / d; hx = sx + dx; hy = sy + dy; d = reach; }
+  const base = Math.atan2(dy, dx), bend = Math.acos(d / (2 * L));
+  const a = [sx + L * Math.cos(base + bend), sy + L * Math.sin(base + bend)], b = [sx + L * Math.cos(base - bend), sy + L * Math.sin(base - bend)];
+  const e = (side > 0 ? a[0] > b[0] : a[0] < b[0]) ? a : b;
+  return `<polyline points="${n(sx)},${n(sy)} ${n(e[0])},${n(e[1])} ${n(hx)},${n(hy)}" fill="none" stroke="${C.shirt}" stroke-width="62" stroke-linecap="round" stroke-linejoin="round"/>${extra}<circle cx="${n(hx)}" cy="${n(hy)}" r="34" fill="${C.skin}"/>`;
+}
+const slot = (x, y, u, events, habit) => `<rect x="${x}" y="${y}" width="${22 * u}" height="${7 * u}" rx="${2.5 * u}" fill="${events}"/><rect x="${x + 8 * u}" y="${y + 10 * u}" width="${22 * u}" height="${10 * u}" rx="${2.5 * u}" fill="${habit}"/><rect x="${x}" y="${y + 23 * u}" width="${22 * u}" height="${7 * u}" rx="${2.5 * u}" fill="${events}"/>`;
+
+/**
+ * The character, feet at (x, y). Hands are given as targets (L, R) in his own coordinates:
+ * shoulders are at (±112, -600), hands hang at (±150, -290), the middle of his face is (0, -790).
+ * brow: -1 worried … +1 raised. mouth: -1 frown … +1 smile.
+ */
+function guy({ x, y, k = 1, lean = 0, head = 0, L = [-150, -290], R = [150, -290], brow = 0, mouth = 0, gaze = [0, 0], shut = 0, legs = true, phone = false }) {
+  const sad = Math.max(0, -brow), up = Math.max(0, brow);
+  const eye = (ex) => `<ellipse cx="${ex + gaze[0]}" cy="${-98 + gaze[1]}" rx="10" ry="${n(10 * (1 - shut) + 1.6)}" fill="${C.ink}"/>
+    <line x1="-18" y1="0" x2="18" y2="0" stroke="${C.hair}" stroke-width="8" stroke-linecap="round" transform="translate(${ex} ${-130 - 8 * up}) rotate(${n(Math.sign(ex) * 17 * sad)})"/>`;
+  const held = phone ? `<g transform="translate(${R[0]} ${R[1]}) rotate(7)"><rect x="-54" y="-178" width="108" height="208" rx="20" fill="${C.ink}"/><rect x="-45" y="-168" width="90" height="188" rx="11" fill="#fff"/>${slot(-27, -110, 1.8, "#D1D1D6", "#0A0A0A")}</g>` : "";
+  return `<g transform="translate(${n(x)} ${n(y)}) scale(${n(k)})">
+    ${legs ? `<rect x="-118" y="-310" width="102" height="300" rx="30" fill="${C.trousers}"/><rect x="16" y="-310" width="102" height="300" rx="30" fill="${C.trousers}"/>
+      <rect x="-134" y="-36" width="128" height="44" rx="20" fill="${C.ink}"/><rect x="10" y="-36" width="128" height="44" rx="20" fill="${C.ink}"/>` : ""}
+    <g transform="rotate(${n(lean)} 0 -330)">
+      <rect x="-125" y="-352" width="250" height="80" rx="24" fill="${C.trousers}"/>
+      <rect x="-27" y="-715" width="54" height="90" fill="${C.skin}"/>
+      <rect x="-125" y="-640" width="250" height="322" rx="58" fill="${C.shirt}"/>
+      <path d="M -46 -641 L 0 -590 L 46 -641 Z" fill="#fff"/>
+      <rect x="44" y="-540" width="46" height="58" rx="8" fill="#fff"/><rect x="52" y="-526" width="30" height="8" rx="4" fill="${C.ink}" opacity=".5"/>
+      <g transform="translate(0 -690) rotate(${n(head)})">
+        <circle cx="-108" cy="-95" r="18" fill="${C.skin}"/><circle cx="108" cy="-95" r="18" fill="${C.skin}"/>
+        <circle cx="0" cy="-100" r="108" fill="${C.skin}"/>
+        <path d="M -108 -112 A 108 108 0 0 1 108 -112 Q 60 -152 0 -142 Q -62 -132 -108 -112 Z" fill="${C.hair}"/>
+        ${eye(-38)}${eye(38)}
+        <path d="M -26 -50 Q 0 ${n(-50 + 24 * mouth)} 26 -50" fill="none" stroke="${C.ink}" stroke-width="8" stroke-linecap="round"/>
+      </g>
+      ${arm(-112, -600, L[0], L[1], -1)}
+      ${arm(112, -600, R[0], R[1], 1, held)}
+    </g>
+  </g>`;
+}
+
+// ---------- Props ----------
+function bag({ x, y, k = 1, rot = 0, sx = 1, sy = 1, zip = 1 }) {
+  return `<g transform="translate(${n(x)} ${n(y)}) rotate(${n(rot)}) scale(${n(k * sx)} ${n(k * sy)})">
+    <path d="M -92 -182 Q 0 -300 92 -182" fill="none" stroke="${C.ink}" stroke-width="18" stroke-linecap="round"/>
+    <rect x="-190" y="-195" width="380" height="195" rx="62" fill="${C.bag}"/>
+    <path d="M -190 -62 H 190 a 62 62 0 0 1 -62 62 H -128 a 62 62 0 0 1 -62 -62 Z" fill="${C.bagDark}"/>
+    <rect x="-140" y="-118" width="74" height="16" rx="8" fill="#fff" opacity=".9"/>
+    <line x1="-120" y1="-158" x2="${n(-120 + 240 * zip)}" y2="-158" stroke="${C.ink}" stroke-width="9" stroke-linecap="round" stroke-dasharray="2 14"/>
+    <circle cx="${n(-120 + 240 * zip)}" cy="-158" r="13" fill="#fff" stroke="${C.ink}" stroke-width="5"/>
+  </g>`;
+}
+/** A paper note on the wall: his own plan, not the app. */
+function note({ x, y, k = 1, rot = 0, day, strike = 0, pop = 1 }) {
+  return `<g transform="translate(${n(x)} ${n(y)}) rotate(${n(rot)}) scale(${n(k * pop)})" opacity="${n(clamp01(pop * 2))}">
+    <rect x="-140" y="-138" width="300" height="300" rx="10" fill="rgba(21,23,28,.13)"/>
+    <rect x="-150" y="-150" width="300" height="300" rx="10" fill="#fff"/>
+    <path d="M -150 -104 V -140 a 10 10 0 0 1 10 -10 H 140 a 10 10 0 0 1 10 10 V -104 Z" fill="#FFD23F"/>
+    <text x="0" y="-117" font-size="27" font-weight="700" fill="${C.ink}">${day}</text>
+    <text x="0" y="26" font-size="96" font-weight="800" fill="${C.ink}">GYM</text>
+    <text x="0" y="92" font-size="38" font-weight="600" fill="rgba(21,23,28,.6)">7:00 PM</text>
+    ${strike > 0 ? `<line x1="-120" y1="-22" x2="${n(-120 + 240 * strike)}" y2="${n(-22 + 36 * strike)}" stroke="${C.red}" stroke-width="20" stroke-linecap="round"/>` : ""}
+  </g>`;
+}
+const markerHand = (x, y) => `<line x1="${n(x + 70)}" y1="${n(y + 80)}" x2="${n(x + 760)}" y2="${n(y + 400)}" stroke="${C.shirt}" stroke-width="92" stroke-linecap="round"/>
+  <g transform="translate(${n(x)} ${n(y)}) rotate(-40)"><rect x="-13" y="-6" width="26" height="150" rx="10" fill="${C.ink}"/><path d="M -10 -4 L 0 -28 L 10 -4 Z" fill="${C.red}"/></g><circle cx="${n(x + 62)}" cy="${n(y + 74)}" r="52" fill="${C.skin}"/>`;
+function clock({ x, y, r, minutes, pop = 1, late = 0 }) {
+  const hand = (deg, length, width) => `<line x1="0" y1="0" x2="0" y2="${-length}" stroke="${C.ink}" stroke-width="${width}" stroke-linecap="round" transform="rotate(${n(deg)})"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${n(pop)})"><circle r="${r}" fill="#fff" stroke="${late > 0.5 ? C.red : C.ink}" stroke-width="${r * 0.11}"/>
+    ${[0, 90, 180, 270].map((d) => `<line x1="0" y1="${-r * 0.78}" x2="0" y2="${-r * 0.66}" stroke="${C.ink}" stroke-width="${r * 0.06}" stroke-linecap="round" transform="rotate(${d})"/>`).join("")}
+    ${hand((minutes / 720) * 360, r * 0.42, r * 0.1)}${hand((minutes % 60) * 6, r * 0.64, r * 0.07)}<circle r="${r * 0.07}" fill="${C.ink}"/></g>`;
+}
+/** A window: the sky goes from afternoon to dusk to night as `late` goes 0 → 1. */
+function windowPane({ x, y, w, h, late }) {
+  const mix = (a, b, p) => `rgb(${a.map((v, i) => Math.round(lerp(v, b[i], p))).join(",")})`;
+  const sky = late < 0.5 ? mix([174, 221, 255], [246, 160, 110], late * 2) : mix([246, 160, 110], [46, 52, 92], (late - 0.5) * 2);
+  return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="22" fill="${sky}"/>
+    <clipPath id="pane"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="22"/></clipPath>
+    <circle cx="${x + w * 0.68}" cy="${n(y + h * (0.3 + 0.95 * late))}" r="${w * 0.14}" fill="#FFE27A" clip-path="url(#pane)"/>
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="22" fill="none" stroke="${C.ink}" stroke-width="14"/><line x1="${x + w / 2}" y1="${y}" x2="${x + w / 2}" y2="${y + h}" stroke="${C.ink}" stroke-width="10"/></g>`;
+}
+const floor = (y) => `<line x1="110" y1="${y}" x2="970" y2="${y}" stroke="rgba(21,23,28,.16)" stroke-width="8" stroke-linecap="round"/>`;
+
+// ---------- Scenes (u is seconds since the scene began) ----------
+/** His plan for tonight, crossed out. */
+function scene1(u) {
+  const strike = prog(u, 0.16, 0.38), away = prog(u, 0.6, 0.4, inn), drop = prog(u, 0.62, 0.5);
+  const zoom = lerp(1.07, 1, prog(u, 0, 0.7, out));
+  return `<g transform="translate(540 960) scale(${n(zoom)}) translate(-540 -960)">
+    ${note({ x: 540, y: 770, k: 1.45, rot: -4 + 4 * kick(u, 0.54, 0.4, 0.35), day: "TODAY", strike })}
+    ${away < 1 ? markerHand(lerp(364, 715, strike) + 420 * away, lerp(750, 778, strike) + 520 * away) : ""}
+    ${guy({ x: 540, y: 2540, k: 1.55, head: 7 * drop, brow: -1, mouth: -0.5 - 0.4 * drop, gaze: [0, -9 + 15 * drop], shut: blink(u, 1.25) })}
+  </g>`;
+}
+/** Pull back: the rest of the week went the same way. */
+function scene2(u) {
+  const back = spring(u, 0, 0.42, 0.78), slump = spring(u, 0.3, 0.55, 0.6);
+  const spots = [[400, 570, "MON", -3], [680, 570, "WED", 2], [400, 830, "FRI", 3]];
+  const puff = (delay) => { const q = clamp01((u - 0.75 - delay) / 0.8); return q > 0 && q < 1 ? `<circle cx="${n(505 + 70 * q)}" cy="${n(1250 - 110 * q)}" r="${n(10 + 16 * q)}" fill="rgba(21,23,28,${n(0.2 * (1 - q))})"/>` : ""; };
+  return `${floor(1832)}
+    ${spots.map(([x, y, day, rot], i) => note({ x, y, k: 0.78, rot, day, pop: spring(u, 0.1 + i * 0.13, 0.36, 0.6), strike: prog(u, 0.3 + i * 0.13, 0.14) })).join("")}
+    ${note({ x: lerp(540, 680, back), y: lerp(770, 830, back), k: lerp(1.45, 0.78, back), rot: -4, day: "TODAY", strike: 1 })}
+    ${bag({ x: 820, y: 1826, k: 0.62 * spring(u, 0.22, 0.4, 0.6), sy: 1 - 0.1 * kick(u, 0.3, 0.3, 0.4) })}
+    ${guy({ x: lerp(540, 420, back), y: lerp(2540, 1830, back), k: lerp(1.55, 0.82, back), lean: 5 * slump, head: 7 + 5 * slump, brow: -1, mouth: -0.9, gaze: [0, 6], shut: blink(u, 1.2), L: [-150 - 14 * slump, -290 + 16 * slump], R: [150 + 14 * slump, -290 + 16 * slump] })}
+    ${puff(0)}${puff(0.22)}`;
+}
+/** That morning: the bag, packed and zipped. */
+function scene3(u) {
+  const drop = spring(u, 0, 0.42, 0.55), zip = prog(u, 0.55, 0.32);
+  const toss = (delay, fromX, shape) => { const q = clamp01((u - delay) / 0.36); if (q <= 0 || q >= 1) return ""; const x = lerp(fromX, 540, q), y = lerp(1620, 1140, q) - 420 * Math.sin(Math.PI * q) * 0.6; return `<g transform="translate(${n(x)} ${n(y)}) rotate(${n(360 * q * Math.sign(540 - fromX))})">${shape}</g>`; };
+  const spark = (angle, delay) => { const q = clamp01((u - 0.9 - delay) / 0.4); return q > 0 && q < 1 ? `<line x1="0" y1="${-250 - 40 * q}" x2="0" y2="${-290 - 70 * q}" stroke="${C.ink}" stroke-width="12" stroke-linecap="round" opacity="${n(1 - q)}" transform="translate(540 1280) rotate(${angle})"/>` : ""; };
+  return `<ellipse cx="540" cy="1475" rx="${n(400 * drop)}" ry="26" fill="rgba(21,23,28,.12)"/>
+    ${clock({ x: 850, y: 640, r: 104, minutes: 8 * 60, pop: spring(u, 0.15, 0.4, 0.6) })}
+    ${toss(0.2, -80, `<rect x="-70" y="-28" width="140" height="56" rx="26" fill="#fff" stroke="${C.ink}" stroke-width="10"/><rect x="-70" y="6" width="140" height="22" rx="10" fill="${C.ink}"/>`)}
+    ${toss(0.34, 1160, `<rect x="-28" y="-70" width="56" height="140" rx="22" fill="${C.shirt}"/><rect x="-16" y="-92" width="32" height="30" rx="8" fill="${C.ink}"/>`)}
+    ${bag({ x: 540, y: lerp(120, 1470, drop), k: 2.1, sy: 1 - 0.13 * kick(u, 0.21, 0.3, 0.4) + 0.05 * kick(u, 0.56, 0.25, 0.4), sx: 1 + 0.06 * kick(u, 0.21, 0.3, 0.4), rot: 2 * kick(u, 0.9, 0.4, 0.4), zip })}
+    ${[-38, -8, 22].map((a, i) => spark(a, i * 0.06)).join("")}`;
+}
+/** The meeting that runs past its end, while the evening goes. */
+function scene4(u, dur) {
+  const late = prog(u, 0.12, Math.max(0.8, dur - 0.45)), over = clamp01((late - 0.3) / 0.7), fed = spring(u, 0.12 + (dur - 0.45) * 0.62, 0.5, 0.6);
+  const chip = spring(u, 0.04, 0.4, 0.65), shake = over > 0 ? 4 * Math.sin(u * 46) * over : 0, fill = lerp(0.4, 1, late);
+  return `${windowPane({ x: 120, y: 440, w: 330, h: 370, late: late * 0.85 })}
+    ${clock({ x: 850, y: 600, r: 104, minutes: lerp(17 * 60 + 40, 19 * 60 + 40, late), late: over })}
+    <g transform="translate(${n(540 + shake)} 910) scale(${n(chip)})">
+      <rect x="-300" y="-66" width="600" height="132" rx="34" fill="#fff"/><rect x="-300" y="-66" width="600" height="132" rx="34" fill="none" stroke="${C.ink}" stroke-width="8"/>
+      <text x="-190" y="-12" font-size="34" font-weight="700" fill="${C.ink}">Meeting</text>
+      <text x="205" y="-12" font-size="34" font-weight="800" fill="${over > 0 ? C.red : "rgba(21,23,28,.5)"}">${over > 0 ? `+${Math.round(100 * over)} min` : "ends 6:00"}</text>
+      <rect x="-262" y="14" width="524" height="22" rx="11" fill="rgba(21,23,28,.12)"/>
+      <rect x="-262" y="14" width="${n(524 * fill)}" height="22" rx="11" fill="${over > 0 ? C.red : C.ink}"/>
+      <rect x="${n(-262 + 524 * 0.58)}" y="4" width="8" height="42" rx="4" fill="${C.ink}"/>
+    </g>
+    ${bag({ x: 912, y: 1896, k: 0.5 })}
+    ${guy({ x: 540, y: 1940, k: 1.02, legs: false, head: -5 * fed, brow: -0.9 * over, mouth: -0.2 - 0.6 * over, gaze: [9 * fed, -8 * fed], shut: blink(u, 0.5), L: [lerp(-120, -238, fed), lerp(-330, -505 - 14 * Math.sin(u * 9), fed)], R: [lerp(120, 238, fed), lerp(-330, -505 - 14 * Math.sin(u * 9), fed)] })}
+    <rect x="395" y="1392" width="290" height="196" rx="20" fill="#3A3F4D"/><circle cx="540" cy="1486" r="16" fill="#8990A3"/>
+    <rect x="100" y="1584" width="880" height="62" rx="20" fill="${C.desk}"/><rect x="150" y="1646" width="46" height="274" fill="${C.deskDark}"/><rect x="884" y="1646" width="46" height="274" fill="${C.deskDark}"/>`;
+}
+/** Too late for the gym now. */
+function scene5(u) {
+  const palm = spring(u, 0.08, 0.4, 0.62), sag = prog(u, 0.15, 0.7);
+  const zoom = lerp(1, 1.05, prog(u, 0, 1.6, linear));
+  return `<g transform="translate(540 1100) scale(${n(zoom)}) translate(-540 -1100)">
+    ${windowPane({ x: 110, y: 440, w: 350, h: 390, late: lerp(0.85, 1, sag) })}
+    ${clock({ x: 850, y: 620, r: 124 * (1 + 0.06 * kick(u, 0.1, 0.3, 0.4)), minutes: 19 * 60 + 40, late: 1 })}
+    ${bag({ x: 190, y: 1930, k: 0.95, sy: lerp(1, 0.84, sag), sx: lerp(1, 1.05, sag), rot: -4 * sag })}
+    ${guy({ x: 560, y: 2580, k: 1.7, head: 9 * sag, lean: 3 * sag, brow: -1, mouth: -0.9, gaze: [0, 8], shut: prog(u, 0.2, 0.12), R: [lerp(150, 34, palm), lerp(-290, -838, palm)] })}
+  </g>`;
+}
+/** He picks up his phone. */
+function scene6(u) {
+  const lift = spring(u, 0.06, 0.45, 0.62), look = prog(u, 0.1, 0.45);
+  const ping = (delay) => { const q = clamp01((u - 0.55 - delay) / 0.5); return q > 0 && q < 1 ? `<path d="M ${n(660 + 40 * q)} ${n(1230 - 30 * q)} q 34 -26 34 -72" fill="none" stroke="${C.ink}" stroke-width="10" stroke-linecap="round" opacity="${n(1 - q)}"/>` : ""; };
+  return `${floor(1832)}
+    ${bag({ x: 830, y: 1826, k: 0.62 })}
+    ${guy({ x: 400, y: 1830, k: 0.9, lean: lerp(5, 0, look), head: lerp(10, -5, look), brow: lerp(-0.8, 0.7, look), mouth: lerp(-0.6, 0.3, look), gaze: [8 * look, lerp(6, -2, look)], shut: blink(u, 0.75), phone: true, R: [lerp(150, 195, lift), lerp(-290, -555, lift)] })}
+    ${ping(0)}${ping(0.14)}`;
+}
+/** The end card's wave. */
+function sceneEnd(u) {
+  const up = spring(u, 0.1, 0.5, 0.7), wave = Math.sin(u * 8.5);
+  return `${guy({ x: 540, y: lerp(2700, 1856, up), k: 0.74, brow: 0.4, mouth: 0.55, shut: blink(u, 1.4) + blink(u, 2.9), head: 3 * wave * up, L: [-250 + 26 * wave, -760 - 10 * wave] })}`;
+}
+
+// ---------- Timetable ----------
+let T, CAMERA, FOCUS;
+function plan(story) {
+  const p = story.p, ends = story.segmentEnds;
+  const end = p[8] - 0.3, urlClear = end + 0.55;
+  T = {
+    lead: story.lead, p, end, urlClear,
+    s2: p[1] - 0.1, s3: p[2] - 0.22, s4: p[3] - 0.12, s5: ends[1] + 0.12, s6: p[4] - 0.3,
+    toPhone: p[5] - 0.4,                      // the phone in his hand becomes the real capture
+    message: p[5] + 0.35, reply: ends[2] + 0.1, change: p[6] - 0.15, previewButton: p[6] + 0.65 * (p[7] - p[6]), sheet: p[7] - 0.12,
+    captions: [[-1, p[1] - 0.25], [p[1] - 0.12, p[2] - 0.32], [p[2] - 0.05, p[3] - 0.25], [p[3] - 0.05, p[4] - 0.4], [p[4] - 0.05, p[5] - 0.3], [p[5] - 0.05, p[6] - 0.35], [p[6] - 0.05, p[7] - 0.25], [p[7] - 0.05, end - 0.22]],
+    duration: Math.ceil(Math.max(urlClear + 3.2, story.speechEnd + story.tail) * 10 - 1e-6) / 10, // the address stays readable for over three seconds
+  };
+  T.cuts = [T.s2, T.s3, T.s4, T.s5, T.s6, T.toPhone, T.sheet, T.end];
+  // Camera on the captures: `fx`, `fy` are the point looked at (0–1), `ty` where it sits in the frame, `s` the zoom.
+  CAMERA = [
+    { at: 0, fx: 0.5, fy: 0.5, ty: 1150, s: 0.92 },
+    { at: T.toPhone + 0.5, fx: 0.5, fy: 0.5, ty: 1150, s: 0.96, dur: Math.max(0.2, T.message - T.toPhone - 0.5), ease: linear },
+    { at: T.message, fx: 0.52, fy: 0.53, ty: 1090, s: 1.3, dur: 0.4 },      // what he asked
+    { at: T.reply, fx: 0.48, fy: 0.6, ty: 1090, s: 1.3, dur: 0.45 },         // what the coach said
+    { at: T.change, fx: 0.47, fy: 0.72, ty: 1120, s: 1.3, dur: 0.5 },        // the suggested change
+    { at: T.sheet, fx: 0.5, fy: 0.68, ty: 1170, s: 1.16, dur: 0.45 },        // the Preview sheet
+    { at: T.sheet + 0.45, fx: 0.5, fy: 0.68, ty: 1170, s: 1.2, dur: Math.max(0.3, end - T.sheet - 0.8), ease: linear },
+  ];
+  // Emphasis box: [left, top, right, bottom] of the capture (0–1) and how far the rest is dimmed.
+  FOCUS = [
+    { at: 0, box: [0.2, 0.42, 0.97, 0.532], dim: 0 },
+    { at: T.message, box: [0.2, 0.42, 0.97, 0.532], dim: 0.3, dur: 0.35 },
+    { at: T.reply, box: [0.03, 0.535, 0.79, 0.648], dim: 0.3, dur: 0.35 },
+    { at: T.change, box: [0.03, 0.64, 0.8, 0.816], dim: 0.32, dur: 0.4 },
+    { at: T.previewButton, box: [0.066, 0.742, 0.41, 0.8], dim: 0.36, dur: 0.3 },
+    { at: T.sheet - 0.1, box: [0.066, 0.742, 0.41, 0.8], dim: 0, dur: 0.1 },
+    { at: T.sheet + 0.3, box: [0.06, 0.54, 0.94, 0.748], dim: 0.2, dur: 0.3 },   // what would change: Wed 19:00 → 18:00
+    { at: end - 0.4, box: [0.06, 0.54, 0.94, 0.748], dim: 0, dur: 0.25 },
+  ];
+}
+
+function seek(t) {
+  // The illustrated scenes
+  const art = $("#art");
+  const scenes = [[0, scene1], [T.s2, scene2], [T.s3, scene3], [T.s4, (u) => scene4(u, T.s5 - T.s4)], [T.s5, scene5], [T.s6, scene6]];
+  const leaving = prog(t, T.end - 0.3, 0.3);
+  if (t >= T.end - 0.25) { art.innerHTML = sceneEnd(t - T.end + 0.25); art.style.opacity = 1; } // he is already on his way up as the phone leaves
+  else if (t < T.toPhone + 0.24) {
+    const [start, draw] = [...scenes].reverse().find(([at]) => t >= at);
+    art.innerHTML = draw(t - start);
+    art.style.opacity = 1 - prog(t, T.toPhone + 0.04, 0.18);
+  } else { art.innerHTML = ""; art.style.opacity = 0; }
+
+  // The real captures
+  let c = { ...CAMERA[0] };
+  for (const key of CAMERA.slice(1)) {
+    if (t <= key.at) break;
+    const q = prog(t, key.at, key.dur, key.ease ?? inOut);
+    for (const k of ["fx", "fy", "ty", "s"]) c[k] = lerp(c[k], key[k], q);
+  }
+  const grow = prog(t, T.toPhone, 0.45, out); // from the phone in his hand (about 94 px wide at 575, 1268) to the frame
+  const s = lerp(0.12, c.s, grow);
+  const phone = $("#phone");
+  phone.style.display = t < T.toPhone || t >= T.end + 0.1 ? "none" : "";
+  phone.style.transform = `translate(${n(lerp(575 - 390 * 0.12, 540 - c.fx * 780 * c.s, grow))}px, ${n(lerp(1268 - 848 * 0.12, c.ty - c.fy * 1696 * c.s, grow) + 240 * leaving)}px) scale(${n(s)})`;
+  phone.style.opacity = clamp01(grow * 4) * (1 - leaving);
+  $("#shade").style.opacity = t < T.toPhone ? 0 : grow * (1 - leaving);
+  const sheet = prog(t, T.sheet, 0.36, out);
+  const preview = $("#s-preview");
+  preview.style.opacity = clamp01(sheet * 3);
+  preview.style.clipPath = `inset(${(1 - sheet) * 52}% 0 0 0)`; // the sheet rises over the chat, as it does in the app
+  preview.style.transform = `translateY(${(1 - sheet) * 60}px)`;
+  let f = { box: [...FOCUS[0].box], dim: FOCUS[0].dim };
+  for (const key of FOCUS.slice(1)) {
+    if (t <= key.at) break;
+    const q = prog(t, key.at, key.dur);
+    f = { box: f.dim < 0.01 ? [...key.box] : f.box.map((v, i) => lerp(v, key.box[i], q)), dim: lerp(f.dim, key.dim, q) };
+  }
+  Object.assign($("#focus").style, { left: f.box[0] * 780 + "px", top: f.box[1] * 1696 + "px", width: (f.box[2] - f.box[0]) * 780 + "px", height: (f.box[3] - f.box[1]) * 1696 + "px", boxShadow: `0 0 0 4000px rgba(0, 0, 0, ${f.dim.toFixed(3)})` });
+
+  // Captions. The first is on screen from the first frame.
+  document.querySelectorAll(".cap").forEach((cap, i) => {
+    const [from, to] = T.captions[i];
+    const enter = i === 0 ? 1 : prog(t, from, 0.24, out), exit = prog(t, to, 0.18);
+    cap.style.opacity = enter * (1 - exit);
+    cap.style.transform = i === 0 ? `scale(${n(lerp(1.08, 1, prog(t, 0, 0.6, out)))}) translateY(${-exit * 14}px)`
+      : i === 1 ? `scale(${n(lerp(1.5, 1, prog(t, from, 0.22, out)))}) translateY(${-exit * 14}px)` : `translateY(${n((1 - enter) * 22 - exit * 14)}px)`;
+  });
+
+  // End card
+  const end = $("#end");
+  end.style.display = t < T.end - 0.02 ? "none" : "";
+  [["#lockup", 0, 0.3], ["#join", 0.12, 0.35], ["#site", 0.2, 0.35]].forEach(([id, delay, dur]) => {
+    const e = prog(t, T.end + delay, dur, out);
+    $(id).style.opacity = e;
+    $(id).style.transform = `translateY(${(1 - e) * 24}px)`;
+  });
+}
+
+const U = 132 / 48; // the Slot tile: a 48 × 48 unit grid (brand/README.md), dark version
+[[9, 9, 22, 7, "#48484A"], [17, 19, 22, 10, "#fff"], [9, 32, 22, 7, "#48484A"]].forEach(([x, y, w, h, color], i) => {
+  Object.assign(document.querySelectorAll("#tile div")[i].style, { left: x * U + "px", top: y * U + "px", width: w * U + "px", height: h * U + "px", borderRadius: 2.5 * U + "px", background: color });
+});
+const timing = new URLSearchParams(location.search).get("timing") ?? "story"; // which take's timing to follow
+Promise.all([fetch(`out/${timing}.json`).then((r) => r.json()).then(plan), document.fonts.load('800 100px "Onest"', "habitnex"), ...[...document.images].map((img) => img.decode())]).then(() => {
+  window.TIMES = T;
+  window.seek = seek;
+  seek(Number(new URLSearchParams(location.search).get("t") ?? 0));
+  window.READY = true;
+});
+</script>
+</body>
+</html>
